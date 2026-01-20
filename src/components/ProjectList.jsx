@@ -172,7 +172,7 @@ const ProjectList = () => {
                 </div>
             </div>
 
-            <div className="relative group">
+            <div className="relative">
                 {/* Left Gradient Overlay - Shows when scrolling right is possible */}
                 <div
                     className={`absolute left-0 top-0 bottom-12 w-32 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none transition-opacity duration-300 ${canScrollLeft ? 'opacity-100' : 'opacity-0'

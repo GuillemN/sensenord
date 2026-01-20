@@ -37,7 +37,7 @@ const ProjectDetail = () => {
                     <Link to="/" className="inline-flex items-center gap-2 text-white/80 hover:text-white mb-6 uppercase tracking-widest text-xs font-bold transition-colors">
                         <ArrowLeft className="w-4 h-4" /> Tornar a l'inici
                     </Link>
-                    <div className="flex items-center gap-4 text-alpine-300 font-mono text-sm font-bold uppercase tracking-widest mb-4">
+                    <div className="flex items-center gap-4 text-white font-mono text-sm font-bold uppercase tracking-widest mb-4">
                         <span>{project.category}</span>
                         <span>•</span>
                         <span>{project.year}</span>
@@ -46,7 +46,7 @@ const ProjectDetail = () => {
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.2 }}
-                        className="text-4xl md:text-6xl lg:text-7xl font-display font-bold uppercase leading-none mb-4"
+                        className="text-4xl md:text-6xl lg:text-7xl font-display font-bold uppercase leading-none mb-4 text-white"
                     >
                         {project.title}
                     </motion.h1>
