@@ -39,9 +39,7 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 }}
                 >
-                    <p className="font-mono text-alpine-200 uppercase tracking-[0.3em] mb-4 text-sm md:text-base font-bold shadow-black drop-shadow-md">
-                        Est. 2024 · Catalunya
-                    </p>
+
                     <div className="mb-12 flex justify-center w-full">
                         <img
                             src="/logo.png"
