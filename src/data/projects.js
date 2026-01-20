@@ -85,23 +85,24 @@ export const projects = [
              <p class="mb-6">Aquest projecte neix de la voluntat de compartir. Viatgem al Senegal amb un objectiu doble que uneix esport i educació:</p>
              
              <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-10 not-prose">
-                <div class="relative group overflow-hidden bg-stone-900 rounded-lg h-48">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-                     {/* Using a solid color fallback but imagine an image here */}
-                    <div class="absolute inset-0 bg-alpine-600 opacity-20 group-hover:opacity-30 transition-opacity"></div>
-                    <div class="absolute bottom-0 left-0 p-6 z-20 text-white">
-                        <span class="block text-xs font-bold uppercase tracking-widest text-alpine-300 mb-1">Esport</span>
-                        <span class="text-2xl font-display font-bold">Equipar Vies</span>
-                        <p class="text-sm text-stone-300 mt-2">Creació d'una escola d'escalada segura i accessible.</p>
+                <div class="relative group overflow-hidden bg-stone-900 rounded-lg h-64">
+                    <img src="/senegal_card_sport.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Escalada al Senegal" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
+                    <div class="absolute inset-0 bg-alpine-600/20 group-hover:bg-alpine-600/30 transition-colors z-10"></div>
+                    <div class="absolute bottom-0 left-0 p-8 z-20 text-white">
+                        <span class="block text-xs font-bold uppercase tracking-widest text-alpine-300 mb-2">Esport</span>
+                        <span class="block text-3xl font-display font-bold mb-2">Equipar Vies</span>
+                        <p class="text-sm text-stone-200 leading-relaxed">Creació d'una escola d'escalada segura i accessible per a tothom.</p>
                     </div>
                 </div>
-                <div class="relative group overflow-hidden bg-stone-900 rounded-lg h-48">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-                    <div class="absolute inset-0 bg-orange-600 opacity-20 group-hover:opacity-30 transition-opacity"></div>
-                    <div class="absolute bottom-0 left-0 p-6 z-20 text-white">
-                         <span class="block text-xs font-bold uppercase tracking-widest text-orange-300 mb-1">Educació</span>
-                        <span class="text-2xl font-display font-bold">Suport Escolar</span>
-                        <p class="text-sm text-stone-300 mt-2">Rehabilitació i material per a l'escola local.</p>
+                <div class="relative group overflow-hidden bg-stone-900 rounded-lg h-64">
+                    <img src="/senegal_card_edu.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Educació i suport" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
+                    <div class="absolute inset-0 bg-orange-600/20 group-hover:bg-orange-600/30 transition-colors z-10"></div>
+                    <div class="absolute bottom-0 left-0 p-8 z-20 text-white">
+                         <span class="block text-xs font-bold uppercase tracking-widest text-orange-300 mb-2">Educació</span>
+                        <span class="block text-3xl font-display font-bold mb-2">Suport Escolar</span>
+                        <p class="text-sm text-stone-200 leading-relaxed">Rehabilitació i material per a l'escola local de la comunitat.</p>
                     </div>
                 </div>
              </div>
