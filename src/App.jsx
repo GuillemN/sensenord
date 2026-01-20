@@ -5,6 +5,8 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import ProjectDetail from './pages/ProjectDetail';
+import Contact from './pages/Contact';
+import About from './pages/About';
 import NotFound from './pages/NotFound';
 
 const AnimatedRoutes = () => {
@@ -15,6 +17,8 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/project/:id" element={<ProjectDetail />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>

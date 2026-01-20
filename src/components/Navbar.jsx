@@ -38,6 +38,8 @@ const Navbar = () => {
     { name: 'Inici', href: '/#hero', id: 'hero' },
     { name: 'Projectes', href: '/#projects', id: 'projects' },
     { name: 'Esdeveniments', href: '/#events', id: 'events' },
+    { name: 'Qui Som', href: '/about', id: 'about' },
+    { name: 'Contacte', href: '/contact', id: 'contact' },
   ];
 
   const scrollToSection = (e, id) => {
@@ -62,17 +64,27 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-10">
           {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={(e) => scrollToSection(e, link.id)}
-              className={`text-sm font-bold uppercase tracking-widest transition-all duration-300 border-b-2 ${activeSection === link.id
-                ? (scrolled ? 'text-alpine-600 border-alpine-600' : 'text-white border-white')
-                : 'border-transparent ' + (scrolled ? 'text-slate-600 hover:text-alpine-600' : 'text-slate-300 hover:text-white')
-                }`}
-            >
-              {link.name}
-            </a>
+            link.href.startsWith('/#') ? (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={(e) => scrollToSection(e, link.id)}
+                className={`text-sm font-bold uppercase tracking-widest transition-all duration-300 border-b-2 ${activeSection === link.id
+                  ? (scrolled ? 'text-alpine-600 border-alpine-600' : 'text-white border-white')
+                  : 'border-transparent ' + (scrolled ? 'text-slate-600 hover:text-alpine-600' : 'text-slate-300 hover:text-white')
+                  }`}
+              >
+                {link.name}
+              </a>
+            ) : (
+              <Link
+                key={link.name}
+                to={link.href}
+                className={`text-sm font-bold uppercase tracking-widest transition-all duration-300 border-b-2 border-transparent ${scrolled ? 'text-slate-600 hover:text-alpine-600' : 'text-slate-300 hover:text-white'}`}
+              >
+                {link.name}
+              </Link>
+            )
           ))}
           <span
             className="text-xs font-bold uppercase tracking-widest text-slate-300 border border-slate-300 px-3 py-1 rounded"

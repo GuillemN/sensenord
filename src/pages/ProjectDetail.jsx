@@ -67,36 +67,7 @@ const ProjectDetail = () => {
                              Ideally we would use a markdown parser. For this demo, I will conditionally render the JSX structure.
                          */}
 
-                        {project.id === 1 ? (
-                            <>
-                                <p className="lead text-xl font-light mb-8 text-stone-900">Un viatge èpic des de la sorra del Mediterrani fins al cim més alt d'Europa occidental. 30 dies de superació, connexió amb la natura i solidaritat.</p>
-
-                                <h3 className="text-2xl font-bold mb-4 font-display uppercase text-alpine-950 mt-12">El Repte</h3>
-                                <p className="mb-6">Caminar des del nivell del mar (0m) fins als 4.809m del Mont Blanc és més que una fita física; és un símbol de com, pas a pas, podem assolir qualsevol cim que ens proposem. Aquesta travessa va unir dues de les nostres grans passions: el mar i la muntanya.</p>
-
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-12 not-prose">
-                                    <div className="bg-stone-50 p-6 border border-stone-200 text-center">
-                                        <span className="block text-4xl font-display font-bold text-alpine-600 mb-2">30</span>
-                                        <span className="text-sm uppercase tracking-widest text-stone-500 font-bold">Dies de travessa</span>
-                                    </div>
-                                    <div className="bg-stone-50 p-6 border border-stone-200 text-center">
-                                        <span className="block text-4xl font-display font-bold text-alpine-600 mb-2">938</span>
-                                        <span className="text-sm uppercase tracking-widest text-stone-500 font-bold">Kilòmetres</span>
-                                    </div>
-                                    <div className="bg-stone-50 p-6 border border-stone-200 text-center">
-                                        <span className="block text-4xl font-display font-bold text-alpine-600 mb-2">1.3M</span>
-                                        <span className="text-sm uppercase tracking-widest text-stone-500 font-bold">Passes</span>
-                                    </div>
-                                </div>
-
-                                <h3 className="text-2xl font-bold mb-4 font-display uppercase text-alpine-950">La Ruta</h3>
-                                <p className="mb-6">El camí va començar a la platja Gran de Tossa de Mar. Creuant les Gavarres, el Montseny, i endinsant-nos als Pirineus. Després, la llarga travessa pel sud de França fins a arribar als Alps. Cada etapa va ser una descoberta: nous paisatges, noves persones i nous reptes interns.</p>
-
-                                <p>Aquest projecte ha estat possible gràcies al suport de tots els col·laboradors i patrocinadors que han cregut en la causa de Sense Nord.</p>
-                            </>
-                        ) : (
-                            <p>{project.description}</p>
-                        )}
+                        <div dangerouslySetInnerHTML={{ __html: project.fullContent || `<p>${project.description}</p>` }} />
                     </div>
                 </motion.div>
             </div>
