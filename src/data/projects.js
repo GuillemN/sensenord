@@ -5,7 +5,7 @@ export const projects = [
         category: "GRAN REPTE",
         year: "2024",
         stat: "938km",
-        image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop",
+        image: "/montblanc.png",
         description: "30 dies, 938 km i 1.381.950 passes. De la Costa Brava al sostre dels Alps.",
         fullContent: `
             <p class="lead text-xl font-light mb-8">Un viatge èpic des de la sorra del Mediterrani fins al cim més alt d'Europa occidental. 30 dies de superació, connexió amb la natura i solidaritat.</p>
@@ -39,39 +39,35 @@ export const projects = [
         title: "Via Ferrata Solidària",
         category: "ESDEVENIMENT",
         year: "2024",
-        stat: "Sorteig Pack",
-        image: "/ferrata.png",
-        description: "Participa, gaudeix d'una via ferrata gratuïta i entra al sorteig d'un pack magnífic a Tossa de Mar.",
+        stat: "1.600€",
+        image: "/ferrata_real.jpg",
+        description: "10 dies d'aventura solidària que van servir per ajudar una família afectada per un incendi.",
         fullContent: `
-            <p class="lead text-xl font-light mb-8 text-stone-900">Una jornada d'aventura i solidaritat a la Costa Brava. Gaudeix de l'esport mentre col·labores amb una bona causa.</p>
+            <p class="lead text-xl font-light mb-8 text-stone-900">Una onada de solidaritat a la Costa Brava. Durant 10 dies, vam convertir l'esport en una eina d'ajuda directa.</p>
             
-            <h3 class="text-2xl font-bold mb-6 font-display uppercase text-alpine-900">El Sorteig</h3>
-            <p class="mb-6">Tothom qui hi participi entrarà en el sorteig d’un <strong>pack exclusiu</strong> per gaudir de Tossa de Mar:</p>
+            <div class="bg-gradient-to-r from-emerald-50 to-teal-50 p-8 rounded-xl border border-emerald-100 shadow-sm my-10 text-center not-prose">
+                <span class="block text-sm font-bold text-emerald-800 uppercase tracking-widest mb-2">Recaptació Total</span>
+                <span class="block text-6xl md:text-7xl font-display font-bold text-emerald-600 mb-2">1.600€</span>
+                <span class="inline-block bg-white px-4 py-1 rounded-full text-sm font-medium text-emerald-800 border border-emerald-100 shadow-sm">Objectiu Superat</span>
+            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-12 not-prose">
-                <div class="bg-stone-50 p-6 border border-stone-200 text-center flex flex-col items-center justify-center hover:shadow-lg transition-shadow">
-                    <span class="block text-4xl mb-2">🐢</span>
-                    <span class="text-sm uppercase tracking-widest text-alpine-600 font-bold mb-1">Oceanomads</span>
-                    <span class="text-stone-600 font-medium">Bateig per a 2 persones</span>
+            <h3 class="text-2xl font-bold mb-6 font-display uppercase text-alpine-900">La Causa</h3>
+            <p class="mb-6">Aquesta iniciativa va néixer amb un propòsit urgent: <strong>ajudar una família que ho va perdre tot en un incendi</strong> a casa seva. La resposta de la comunitat va ser increïble.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-10 not-prose">
+                <div class="bg-stone-50 p-8 rounded-lg border-l-4 border-alpine-500">
+                    <span class="block text-4xl mb-4 font-bold text-alpine-300">10</span>
+                    <h4 class="text-lg font-bold text-alpine-900 uppercase mb-2">Dies d'Activitat</h4>
+                    <p class="text-stone-600">Jornades ininterrompudes de guiatge a la Via Ferrata de Sant Feliu de Guíxols.</p>
                 </div>
-                <div class="bg-stone-50 p-6 border border-stone-200 text-center flex flex-col items-center justify-center hover:shadow-lg transition-shadow">
-                    <span class="block text-4xl mb-2">🍽️</span>
-                    <span class="text-sm uppercase tracking-widest text-alpine-600 font-bold mb-1">Can GOL</span>
-                    <span class="text-stone-600 font-medium">2 Menús Gastronòmics</span>
-                </div>
-                <div class="bg-stone-50 p-6 border border-stone-200 text-center flex flex-col items-center justify-center hover:shadow-lg transition-shadow">
-                    <span class="block text-4xl mb-2">🏨</span>
-                    <span class="text-sm uppercase tracking-widest text-alpine-600 font-bold mb-1">Hotel Windsor</span>
-                    <span class="text-stone-600 font-medium">Nit + Esmorzar (2 pers)</span>
+                <div class="bg-stone-50 p-8 rounded-lg border-l-4 border-alpine-500">
+                    <span class="block text-4xl mb-4 font-bold text-alpine-300">∞</span>
+                    <h4 class="text-lg font-bold text-alpine-900 uppercase mb-2">Agraïment Etern</h4>
+                    <p class="text-stone-600">Gràcies a tots els participants i col·laboradors (Oceanomads, Can GOL, Hotel Windsor) per fer-ho possible.</p>
                 </div>
             </div>
 
-            <div class="bg-alpine-50 p-8 border-l-4 border-alpine-600 mb-8 rounded-r-lg">
-                <h4 class="font-bold text-alpine-900 uppercase tracking-wider mb-2">📅 Dates i Disponibilitat</h4>
-                <p class="text-alpine-800">Del <strong>26 de setembre al 10 d’octubre</strong>.<br/>També disponible entre setmana per evitar aglomeracions.</p>
-            </div>
-
-            <p class="mb-6">A més de col·laborar amb un projecte solidari, tindràs l'oportunitat de descobrir la Via Ferrata de Sant Feliu de Guíxols amb tot el material tècnic i l'acompanyament inclòs.</p>
+            <p class="mb-6">Va ser molt més que esport; va ser una demostració de com la muntanya uneix persones per fer front a les adversitats.</p>
         `
     },
     {
@@ -80,7 +76,7 @@ export const projects = [
         category: "COOPERACIÓ",
         year: "2024",
         stat: "Equipament",
-        image: "/senegal.png",
+        image: "/senegal_real.jpg",
         description: "Viatge solidari al Senegal per equipar vies d'escalada i col·laborar amb una escola local.",
         fullContent: `
              <p class="lead text-xl font-light mb-8 text-stone-900">Unint l'escalada i la cooperació internacional. Portant la passió per la roca més enllà de les nostres fronteres.</p>
@@ -119,28 +115,33 @@ export const projects = [
         title: "Solidaritat Canina",
         category: "PROTECTORA",
         year: "2024",
-        stat: "19 DES",
+        stat: "952€",
         image: "/dogs.png",
-        description: "Escalada Solidària en in ajut a la protectora de gossos Chari Cruz. Vine i participa!",
+        description: "Jornada d'escalada a Blanes que va recaptar fons per a la protectora d'animals de Tossa de Mar.",
         fullContent: `
-            <p class="lead text-xl font-light mb-8 text-stone-900">Natura, esport i amor pels animals. Una jornada per donar veu als qui no en tenen.</p>
+            <p class="lead text-xl font-light mb-8 text-stone-900">Una jornada inoblidable d'escalada, somriures i solidaritat a la sala Golem. Entre tots vam aconseguir aportar el nostre granet de sorra per als animals que més ho necessiten.</p>
 
-            <div class="flex flex-col md:flex-row items-center gap-8 bg-stone-100 p-8 rounded-xl border border-stone-200 my-10 not-prose">
-                <div class="bg-white p-4 rounded-lg shadow-sm text-center min-w-[120px]">
-                    <span class="block text-sm font-bold text-alpine-900 uppercase mb-1">DATA</span>
-                    <span class="block text-4xl font-display font-bold text-alpine-600">19</span>
-                    <span class="block text-sm font-bold text-stone-500 uppercase">DESEMBRE</span>
+            <div class="bg-gradient-to-r from-emerald-50 to-teal-50 p-8 rounded-xl border border-emerald-100 shadow-sm my-10 text-center not-prose">
+                <span class="block text-sm font-bold text-emerald-800 uppercase tracking-widest mb-2">Recaptació Total</span>
+                <span class="block text-6xl md:text-7xl font-display font-bold text-emerald-600 mb-2">952€</span>
+                <span class="inline-block bg-white px-4 py-1 rounded-full text-sm font-medium text-emerald-800 border border-emerald-100 shadow-sm">Destinats íntegrament als animals</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-10 not-prose">
+                 <div class="bg-stone-50 p-8 rounded-lg border-l-4 border-alpine-500">
+                    <h4 class="text-lg font-bold text-alpine-900 uppercase mb-2">📍 Sala Golem Blanes</h4>
+                    <p class="text-stone-600">Menció especial per a ells. Ens van cedir l'espai i van col·laborar activament en l'organització de l'esdeveniment.</p>
                 </div>
-                <div class="flex-1 text-center md:text-left">
-                    <h3 class="text-2xl font-display font-bold text-stone-800 mb-2">Escalada Solidària amb GOLEM</h3>
-                    <p class="text-stone-600">Jornada de portes obertes, competició amistosa i recollida d'aliments i material.</p>
+                <div class="bg-stone-50 p-8 rounded-lg border-l-4 border-alpine-500">
+                    <h4 class="text-lg font-bold text-alpine-900 uppercase mb-2">🤝 Associació Chari Cruz</h4>
+                    <p class="text-stone-600">Protectora de gossos i gats de Tossa de Mar. Fan una feina incansable per donar una segona oportunitat als animals abandonats.</p>
                 </div>
             </div>
 
-            <h3 class="text-2xl font-bold mb-4 font-display uppercase text-alpine-900">La Causa: Chari Cruz</h3>
-            <p class="mb-6">El refugi Chari Cruz realitza una tasca incansable acollint gossos abandonats, curant-los i buscant-los una nova llar. </p>
+            <h3 class="text-2xl font-bold mb-4 font-display uppercase text-alpine-900">Com va funcionar?</h3>
+            <p class="mb-6">L'entrada a la sala tenia un caràcter solidari de <strong>5€</strong>. La resposta de la gent va ser espectacular, omplint la sala de bon ambient i ganes d'ajudar.</p>
             
-            <p>Tant si escales com si no, estàs convidat a participar. Hi haurà música, bon ambient i la satisfacció de saber que estàs ajudant a mantenir els bols plens aquest hivern.</p>
+            <p>Gràcies a tothom qui va venir a escalar, a fer-se una cervesa o simplement a donar suport. Aquests fons es convertiran en aliment, medecines i cures veterinàries.</p>
         `
     }
 ];
