@@ -1,8 +1,34 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Send } from 'lucide-react';
+import { Mail, MapPin, Send, Loader2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Contact = () => {
+    const navigate = useNavigate();
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        try {
+            await fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(formData).toString(),
+            });
+            navigate('/success');
+        } catch (error) {
+            console.error('Submission error:', error);
+            alert("Hi ha hagut un error en enviar el missatge. Si us plau, torna-ho a provar.");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -70,7 +96,7 @@ const Contact = () => {
                             name="contact"
                             method="POST"
                             data-netlify="true"
-                            action="/success"
+                            onSubmit={handleSubmit}
                             className="space-y-6"
                         >
                             <input type="hidden" name="form-name" value="contact" />
@@ -113,9 +139,14 @@ const Contact = () => {
 
                             <button
                                 type="submit"
-                                className="w-full bg-alpine-600 text-white font-bold py-4 uppercase tracking-widest hover:bg-alpine-800 transition-all flex items-center justify-center gap-2 group"
+                                disabled={isSubmitting}
+                                className="w-full bg-alpine-600 text-white font-bold py-4 uppercase tracking-widest hover:bg-alpine-800 transition-all flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed"
                             >
-                                Enviar Missatge <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                {isSubmitting ? (
+                                    <>Enviant <Loader2 className="w-4 h-4 animate-spin" /></>
+                                ) : (
+                                    <>Enviar Missatge <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></>
+                                )}
                             </button>
                         </form>
                     </div>
