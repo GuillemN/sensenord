@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import ProjectDetail from './pages/ProjectDetail';
 import Contact from './pages/Contact';
 import About from './pages/About';
+import Success from './pages/Success';
 import NotFound from './pages/NotFound';
 
 const AnimatedRoutes = () => {
@@ -18,6 +19,7 @@ const AnimatedRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/project/:id" element={<ProjectDetail />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/success" element={<Success />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
