@@ -67,6 +67,13 @@ const Admin = () => {
     // Extract unique events for the filter
     const uniqueEvents = ['all', ...new Set(data.map(item => item.event).filter(Boolean))];
 
+    // Calculate stats per event
+    const stats = data.reduce((acc, item) => {
+        if (!item.event) return acc;
+        acc[item.event] = (acc[item.event] || 0) + 1;
+        return acc;
+    }, {});
+
     const filteredData = data.filter(item => {
         // Filter out empty rows (junk data)
         if (!item.name && !item.event) return false;
@@ -149,6 +156,20 @@ const Admin = () => {
                             Actualitzar
                         </button>
                     </div>
+                </div>
+
+                {/* Stats Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    <div className="bg-white p-4 rounded-xl shadow-sm border border-stone-200">
+                        <div className="text-sm font-bold text-stone-500 uppercase tracking-wider mb-1">Total Inscripcions</div>
+                        <div className="text-3xl font-bold text-alpine-900">{data.length}</div>
+                    </div>
+                    {Object.entries(stats).map(([event, count]) => (
+                        <div key={event} className="bg-white p-4 rounded-xl shadow-sm border border-stone-200">
+                            <div className="text-sm font-bold text-stone-500 uppercase tracking-wider mb-1 truncate" title={event}>{event}</div>
+                            <div className="text-3xl font-bold text-alpine-600">{count}</div>
+                        </div>
+                    ))}
                 </div>
 
                 {error && (

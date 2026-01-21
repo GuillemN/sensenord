@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Calendar, MapPin, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Calendar, MapPin, ArrowRight, Users } from 'lucide-react';
 import EventModal from './EventModal';
 
 const events = [
@@ -28,6 +28,26 @@ const events = [
 const EventList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
+    const [stats, setStats] = useState({});
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            const SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
+            if (!SCRIPT_URL) return;
+
+            try {
+                const response = await fetch(`${SCRIPT_URL}?action=stats`);
+                const result = await response.json();
+                if (result.status === 'success') {
+                    setStats(result.data);
+                }
+            } catch (error) {
+                console.error("Error fetching stats:", error);
+            }
+        };
+
+        fetchStats();
+    }, []);
 
     const handleRegister = (event) => {
         setSelectedEvent(event);
@@ -73,7 +93,7 @@ const EventList = () => {
                             </div>
 
                             {/* Action */}
-                            <div className="p-6 md:w-48 flex items-center justify-center border-t md:border-t-0 md:border-l border-stone-100 bg-white">
+                            <div className="p-6 md:w-48 flex flex-col items-center justify-center gap-3 border-t md:border-t-0 md:border-l border-stone-100 bg-white">
                                 <button
                                     onClick={() => handleRegister(event)}
                                     disabled={event.status !== 'Obert'}
@@ -84,6 +104,13 @@ const EventList = () => {
                                     {event.status === 'Obert' ? 'Inscriu-te' : 'Properament'}
                                     {event.status === 'Obert' && <ArrowRight className="w-4 h-4" />}
                                 </button>
+
+                                {(stats[event.title] > 0) && (
+                                    <div className="flex items-center gap-1.5 text-xs font-medium text-stone-500 bg-stone-100 px-2 py-1 rounded-full">
+                                        <Users className="w-3 h-3" />
+                                        <span>{stats[event.title]} inscrits</span>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}
