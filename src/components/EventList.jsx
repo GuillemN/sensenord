@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Calendar, MapPin, ArrowRight } from 'lucide-react';
+import EventModal from './EventModal';
 
 const events = [
     {
@@ -25,6 +26,14 @@ const events = [
 ];
 
 const EventList = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedEvent, setSelectedEvent] = useState(null);
+
+    const handleRegister = (event) => {
+        setSelectedEvent(event);
+        setIsModalOpen(true);
+    };
+
     return (
         <section id="events" className="py-24 bg-white relative overflow-hidden">
             {/* Background elements */}
@@ -65,10 +74,13 @@ const EventList = () => {
 
                             {/* Action */}
                             <div className="p-6 md:w-48 flex items-center justify-center border-t md:border-t-0 md:border-l border-stone-100 bg-white">
-                                <button className={`flex items-center gap-2 font-bold uppercase tracking-wider text-sm transition-all ${event.status === 'Obert'
-                                    ? 'text-alpine-600 hover:gap-4'
-                                    : 'text-stone-300 cursor-not-allowed'
-                                    }`}>
+                                <button
+                                    onClick={() => handleRegister(event)}
+                                    disabled={event.status !== 'Obert'}
+                                    className={`flex items-center gap-2 font-bold uppercase tracking-wider text-sm transition-all ${event.status === 'Obert'
+                                        ? 'text-alpine-600 hover:gap-4'
+                                        : 'text-stone-300 cursor-not-allowed'
+                                        }`}>
                                     {event.status === 'Obert' ? 'Inscriu-te' : 'Properament'}
                                     {event.status === 'Obert' && <ArrowRight className="w-4 h-4" />}
                                 </button>
@@ -77,6 +89,12 @@ const EventList = () => {
                     ))}
                 </div>
             </div>
+
+            <EventModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                event={selectedEvent}
+            />
         </section>
     );
 };

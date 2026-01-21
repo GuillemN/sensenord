@@ -13,7 +13,7 @@ const ProjectItem = ({ project, index, isDragging }) => {
     };
 
     return (
-        <div className="min-w-[85vw] md:min-w-[500px] lg:min-w-[600px] snap-center">
+        <div className="min-w-[90vw] md:min-w-[500px] lg:min-w-[600px] snap-center snap-always" style={{ scrollSnapStop: 'always' }}>
             <Link
                 to={`/project/${project.id}`}
                 className="block h-full group"

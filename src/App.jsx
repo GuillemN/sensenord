@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import ProjectDetail from './pages/ProjectDetail';
 import Contact from './pages/Contact';
 import About from './pages/About';
+import Admin from './pages/Admin';
 import Success from './pages/Success';
 import NotFound from './pages/NotFound';
 
@@ -21,15 +22,19 @@ const AnimatedRoutes = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/success" element={<Success />} />
         <Route path="/about" element={<About />} />
+        <Route path="/gestio" element={<Admin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
   );
 };
 
+import ScrollToAnchor from './components/ScrollToAnchor';
+
 function App() {
   return (
     <Router>
+      <ScrollToAnchor />
       <div className="min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-grow">
