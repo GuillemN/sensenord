@@ -11,7 +11,18 @@ export const projects = [
             <p class="lead text-xl font-light mb-8">Un viatge èpic des de la sorra del Mediterrani fins al cim més alt d'Europa occidental. 30 dies de superació, connexió amb la natura i solidaritat.</p>
             
             <h3 class="text-2xl font-bold mb-4 font-display uppercase">El Repte</h3>
-            <p class="mb-6">Caminar des del nivell del mar (0m) fins als 4.809m del Mont Blanc és més que una fita física; és un símbol de com, pas a pas, podem assolir qualsevol cim que ens proposem. Aquesta travessa va unir dues de les nostres grans passions: el mar i la muntanya.</p>
+            <p class="mb-4">El dia 29 de juny de 2025 vaig iniciar una caminada solidària.</p>
+            <p class="mb-4">Vaig sortir a peu des de casa meva, a Tossa de Mar, amb un objectiu: arribar al Mont Blanc.</p>
+            <p class="mb-4">Durant 30 dies, cada etapa va estar dedicada a la memòria d’una víctima de la guerra de Gaza.</p>
+            <p class="mb-6">No era només una aventura. Era un acte de memòria, de denúncia i de respecte.</p>
+            
+            <div class="font-bold text-lg text-stone-800 space-y-1 mb-6">
+                <p>938km</p>
+                <p>1.381.950 passes.</p>
+                <p>30 etapes.</p>
+                <p>30 vides.</p>
+                <p class="text-xl text-alpine-600 mt-4">I un cim per recordar-les.</p>
+            </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-12 not-prose">
                 <div class="bg-stone-50 p-6 border border-stone-200 text-center">
