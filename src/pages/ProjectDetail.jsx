@@ -10,7 +10,22 @@ const ProjectDetail = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, []);
+
+        // Load Instagram embed script
+        const scriptId = 'instagram-embed-script';
+        if (!document.getElementById(scriptId)) {
+            const script = document.createElement('script');
+            script.id = scriptId;
+            script.src = '//www.instagram.com/embed.js';
+            script.async = true;
+            document.body.appendChild(script);
+        } else {
+            // If script is already loaded, re-process the embeds
+            if (window.instgrm) {
+                window.instgrm.Embeds.process();
+            }
+        }
+    }, [project]);
 
     if (!project) {
         return <div className="h-screen flex items-center justify-center">Projecte no trobat.</div>;
