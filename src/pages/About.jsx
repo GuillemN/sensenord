@@ -84,7 +84,7 @@ const About = () => {
                             <div>
                                 <h3 className="text-2xl font-display font-bold uppercase mb-2">Xavi Morón</h3>
                                 <p className="text-alpine-200 uppercase tracking-widest text-sm font-bold mb-4">Fundador & Aventurer</p>
-                                <p className="text-slate-300 italic">"L'únic nord que val la pena seguir és el que ens dicta el cor."</p>
+
                             </div>
                         </div>
                     </section>
