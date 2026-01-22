@@ -174,7 +174,7 @@ export const projects = [
         category: "PROTECTORA",
         year: "2024",
         stat: "952€",
-        image: "/gossos_new.png",
+        image: "/gossos_final.png",
         description: "Jornada d'escalada a Blanes que va recaptar fons per a la protectora d'animals de Tossa de Mar.",
         fullContent: `
             <p class="lead text-xl font-light mb-8 text-stone-900">Una jornada inoblidable d'escalada, somriures i solidaritat a la sala Golem. Entre tots vam aconseguir aportar el nostre granet de sorra per als animals que més ho necessiten.</p>
@@ -215,6 +215,51 @@ export const projects = [
             <p class="mb-6">L'entrada a la sala tenia un caràcter solidari de <strong>5€</strong>. La resposta de la gent va ser espectacular, omplint la sala de bon ambient i ganes d'ajudar.</p>
             
             <p>Gràcies a tothom qui va venir a escalar, a fer-se una cervesa o simplement a donar suport. Aquests fons es convertiran en aliment, medecines i cures veterinàries.</p>
+        `
+    },
+    {
+        id: 5,
+        title: "Recollida de Brossa",
+        category: "MEDI AMBIENT",
+        year: "2025",
+        stat: "15kg",
+        image: "/cleanup_placeholder.jpg",
+        description: "Un esforç constant per mantenir nets els nostres espais naturals. Cada quilo compta.",
+        fullContent: `
+            <p class="lead text-xl font-light mb-8 text-stone-900">La muntanya ens ho dona tot, i és la nostra responsabilitat cuidar-la. Aquest projecte busca netejar els nostres entorns naturals de deixalles.</p>
+
+            <div class="bg-white p-8 rounded-xl border border-stone-200 shadow-sm my-10 not-prose">
+                <div class="flex justify-between items-end mb-4">
+                    <div>
+                        <span class="block text-sm font-bold text-alpine-800 uppercase tracking-widest mb-1">Brossa Recollida</span>
+                        <span class="block text-4xl font-display font-bold text-alpine-600">15kg</span>
+                    </div>
+                    <span class="text-sm font-medium text-alpine-500 mb-1">Objectiu: 100kg</span>
+                </div>
+                
+                <div class="w-full bg-stone-100 rounded-full h-6 overflow-hidden">
+                    <div class="bg-alpine-500 h-6 rounded-full transition-all duration-1000 ease-out relative" style="width: 15%">
+                        <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+                    </div>
+                </div>
+                <p class="text-center text-xs text-stone-400 mt-3 font-medium uppercase tracking-wide">Actualitzat constantment</p>
+            </div>
+
+            <h3 class="text-2xl font-bold mb-6 font-display uppercase text-alpine-900">El Projecte</h3>
+            <p class="mb-6">Cada sortida a la muntanya és una oportunitat per deixar-la millor del que l'hem trobat. Organitzem sortides de neteja i conscienciació per preservar la bellesa dels nostres paisatges.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-10 not-prose">
+                <div class="bg-stone-50 p-8 rounded-lg border-l-4 border-emerald-500">
+                    <span class="block text-3xl mb-4">🌍</span>
+                    <h4 class="text-lg font-bold text-alpine-900 uppercase mb-2">Impacte Directe</h4>
+                    <p class="text-stone-600">Retirem plàstics i residus que triguen segles a degradar-se i afecten la fauna local.</p>
+                </div>
+                <div class="bg-stone-50 p-8 rounded-lg border-l-4 border-emerald-500">
+                    <span class="block text-3xl mb-4">♻️</span>
+                    <h4 class="text-lg font-bold text-alpine-900 uppercase mb-2">Conscienciació</h4>
+                    <p class="text-stone-600">Eduquem sobre la importància de no deixar rastre i recollir el que altres han oblidat.</p>
+                </div>
+            </div>
         `
     }
 ];
