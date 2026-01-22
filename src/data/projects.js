@@ -223,7 +223,7 @@ export const projects = [
         category: "MEDI AMBIENT",
         year: "2025",
         stat: "15kg",
-        image: "/cleanup_placeholder.jpg",
+        image: "/cleanup_project.png",
         description: "Un esforç constant per mantenir nets els nostres espais naturals. Cada quilo compta.",
         fullContent: `
             <p class="lead text-xl font-light mb-8 text-stone-900">La muntanya ens ho dona tot, i és la nostra responsabilitat cuidar-la. Aquest projecte busca netejar els nostres entorns naturals de deixalles.</p>
