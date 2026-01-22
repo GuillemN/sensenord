@@ -174,7 +174,7 @@ export const projects = [
         category: "PROTECTORA",
         year: "2024",
         stat: "952€",
-        image: "/dogs.png",
+        image: "/gossos_new.png",
         description: "Jornada d'escalada a Blanes que va recaptar fons per a la protectora d'animals de Tossa de Mar.",
         fullContent: `
             <p class="lead text-xl font-light mb-8 text-stone-900">Una jornada inoblidable d'escalada, somriures i solidaritat a la sala Golem. Entre tots vam aconseguir aportar el nostre granet de sorra per als animals que més ho necessiten.</p>
