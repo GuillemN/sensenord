@@ -3,6 +3,7 @@ import { Calendar, MapPin, ArrowRight, Users } from 'lucide-react';
 import EventModal from './EventModal';
 
 const events = [
+    /*
     {
         id: 1,
         title: "Taller d'Escalada Inclusiva",
@@ -23,6 +24,7 @@ const events = [
         time: "19:00h - 23:00h",
         status: "Aviat"
     }
+    */
 ];
 
 const EventList = () => {
@@ -64,7 +66,7 @@ const EventList = () => {
                     <div className="max-w-2xl">
                         <h2 className="text-5xl md:text-6xl font-display font-bold text-alpine-950 uppercase mb-6">Properes Fites</h2>
                         <p className="text-xl text-stone-600 font-light">
-                            Uneix-te a la cordada. La teva participació és el que ens fa arribar més amunt.
+                            Pròximament...
                         </p>
                     </div>
                 </div>

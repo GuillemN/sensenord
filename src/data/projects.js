@@ -40,7 +40,7 @@ export const projects = [
             </div>
 
             <h3 class="text-2xl font-bold mb-4 font-display uppercase">La Ruta</h3>
-            <p class="mb-6">El camí va començar a la platja Gran de Tossa de Mar. Creuant les Gavarres, el Montseny, i endinsant-nos als Pirineus. Després, la llarga travessa pel sud de França fins a arribar als Alps. Cada etapa va ser una descoberta: nous paisatges, noves persones i nous reptes interns.</p>
+            <p class="mb-6">El camí va començar a la platja Gran de Tossa de Mar. Creuant les Gavarres, el Montseny, i passant per la costa plana de França fins a arribar als Alps. Cada etapa va ser una descoberta: nous paisatges, noves persones i nous reptes interns.</p>
             
             <div class="instagram-embed-container my-10 flex justify-center not-prose">
                 <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DM5eji5tM35/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
