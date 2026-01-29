@@ -86,12 +86,12 @@ const Navbar = () => {
               </Link>
             )
           ))}
-          <span
-            className="text-xs font-bold uppercase tracking-widest text-slate-300 border border-slate-300 px-3 py-1 rounded"
-            title="Pròximament"
+          <Link
+            to="/shop"
+            className="text-xs font-bold uppercase tracking-widest text-alpine-600 border border-alpine-600 px-4 py-2 rounded hover:bg-alpine-600 hover:text-white transition-all"
           >
             Botiga
-          </span>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -123,9 +123,13 @@ const Navbar = () => {
                   {link.name}
                 </a>
               ))}
-              <div className="text-sm text-gray-400 mt-8 font-mono uppercase tracking-widest">
-                Botiga (Coming Soon)
-              </div>
+              <Link
+                to="/shop"
+                className="text-4xl font-display font-bold uppercase text-alpine-600 hover:text-alpine-800 transition-colors mt-4"
+                onClick={() => setIsOpen(false)}
+              >
+                Botiga
+              </Link>
             </div>
           </motion.div>
         )}

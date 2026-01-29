@@ -15,6 +15,17 @@
     <input type="email" name="email" />
     <textarea name="message"></textarea>
   </form>
+  <!-- Netlify Form Definition for Checkout -->
+  <form name="checkout" netlify netlify-honeypot="bot-field" hidden>
+    <input type="text" name="form-name" />
+    <input type="text" name="product_name" />
+    <input type="number" name="product_price" />
+    <input type="text" name="size" />
+    <input type="number" name="quantity" />
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <textarea name="address"></textarea>
+  </form>
   <script type="module" src="/src/main.jsx"></script>
 </body>
 

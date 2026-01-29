@@ -10,6 +10,8 @@ import About from './pages/About';
 import Admin from './pages/Admin';
 import Success from './pages/Success';
 import NotFound from './pages/NotFound';
+import Shop from './pages/Shop';
+import Checkout from './pages/Checkout';
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -23,6 +25,8 @@ const AnimatedRoutes = () => {
         <Route path="/success" element={<Success />} />
         <Route path="/about" element={<About />} />
         <Route path="/gestio" element={<Admin />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
