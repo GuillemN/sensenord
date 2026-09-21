@@ -105,26 +105,76 @@ export const deleteRegistrationFromStorage = async (id) => {
 };
 
 export const generateEmailInstructionsText = (registration) => {
-    return `Hola ${registration.name}!
+    const evTitle = registration.event || 'Esdeveniment Solidari';
+    const isBotifarrada = evTitle.toLowerCase().includes('botifarrada');
+    const isCataVins = evTitle.toLowerCase().includes('vins') || evTitle.toLowerCase().includes('tast');
 
-Gràcies per inscriure't a la Via Ferrada Solidària 2026 organitzada per Sense Nord!
+    if (isBotifarrada) {
+        return `Hola ${registration.name}!
+
+Gràcies per reservar el teu tiquet per a la ${evTitle} organitzada per Sense Nord!
 
 📌 DETALLS DE LA TEVA RESERVA:
 • Codi de Reserva: ${registration.id}
-• Data: Dissabte, 10 d'Octubre de 2026
-• Hora de trobada: 09:00h (Preguem puntualitat)
-• Ubicació: Cala del Molí / Sant Feliu de Guíxols (Costa Brava)
+• Esdeveniment: ${evTitle}
+• Opció de Menú: ${registration.level}
+• DNI / NIF: ${registration.dni}
+• Telèfon: ${registration.phone}
+• Observacions / Al·lèrgies: ${registration.comments || 'Cap'}
+
+🎒 INFORMACIÓ IMPORTANT:
+1. Presenta aquest codi de reserva (${registration.id}) a la taula d'accés per recollir els tiquets de dinar i beguda.
+2. L'activitat comença a les 13:00h. Preguem arribar amb temps.
+3. Gaudirem de dinar de germanor, opció vegetariana, begudes i música en directe.
+
+Si tens qualsevol dubte, pots respondre directament a aquest correu.
+
+Ens veiem ben aviat a la taula!
+Equip de Sense Nord Solidari`;
+    }
+
+    if (isCataVins) {
+        return `Hola ${registration.name}!
+
+Gràcies per inscriure't a la ${evTitle} organitzada per Sense Nord!
+
+📌 DETALLS DE LA TEVA RESERVA:
+• Codi de Reserva: ${registration.id}
+• Esdeveniment: ${evTitle}
+• Modalitat de Tast: ${registration.level}
+• DNI / NIF: ${registration.dni}
+• Telèfon: ${registration.phone}
+• Observacions / Intoleràncies: ${registration.comments || 'Cap'}
+
+🎒 INFORMACIÓ IMPORTANT:
+1. Presenta aquest codi de reserva (${registration.id}) a la recepció del tast.
+2. L'activitat comença puntualment a les 18:00h.
+3. El tast inclou 5 vins de la DO Empordà i maridatge complet de productes de la terra.
+
+Si tens qualsevol dubte, pots respondre directament a aquest correu.
+
+Ens veiem ben aviat al tast!
+Equip de Sense Nord Solidari`;
+    }
+
+    return `Hola ${registration.name}!
+
+Gràcies per inscriure't a la ${evTitle} organitzada per Sense Nord!
+
+📌 DETALLS DE LA TEVA RESERVA:
+• Codi de Reserva: ${registration.id}
+• Esdeveniment: ${evTitle}
 • Nivell registrat: ${registration.level}
 • DNI / NIF: ${registration.dni}
+• Contacte d'emergència: ${registration.emergencyContact}
 
 🎒 INSTRUCCIONS I QUÈ HAS DE PORTAR:
 1. Calçat: Sabatilles d'esport amb bona sola de goma o botes de muntanya/aproximació.
 2. Roba: Roba còmoda de muntanya/esport transpirable adaptada a la intempèrie.
 3. Hidratació i Nutrició: Mínim 1,5 Litres d'aigua per persona i petits snacks (barretes, fruita seca).
-4. Protecció Solar: Crema solar, gorra i ulleres de sol.
-5. Material Tècnic: Casc, arnés i disipador oficials inclosos per a tots els participants.
+4. Material Tècnic: Casc, arnés i disipador oficials inclosos.
 
-Si tens qualsevol dubte o canvi de darrera hora, pots respondre directament a aquest correu.
+Si tens qualsevol dubte, pots respondre directament a aquest correu.
 
 Ens veiem ben aviat a la roca!
 Equip de Sense Nord Solidari`;
