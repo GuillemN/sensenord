@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Oswald:wght@300;400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Fonts: Oswald (Headings/Display) & Lato (Body/Technical) */
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Oswald:wght@300;400;500;700&display=swap');
 
 :root {
   /* Minimalist Palette - Alpine Cool */

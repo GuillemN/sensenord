@@ -1,56 +1,79 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import { X, Loader2, CheckCircle, AlertCircle, Mountain, Mail, Phone, User, ShieldCheck, Ticket, Download, Calendar, MapPin, Sparkles } from 'lucide-react';
+import { saveRegistrationToStorage, sendConfirmationEmail } from '../services/registrationService';
 
 const EventModal = ({ isOpen, onClose, event }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         phone: '',
+        dni: '',
+        level: 'Principiant / Primera vegada',
+        emergencyContact: '',
         comments: ''
     });
+
     const [status, setStatus] = useState('idle'); // idle, submitting, success, error
+    const [confirmedTicket, setConfirmedTicket] = useState(null);
+    const [emailNotice, setEmailNotice] = useState('');
 
     if (!isOpen || !event) return null;
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setStatus('submitting');
 
-        // TODO: Replace with real Google Apps Script URL later
-        const SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
+        const ticketId = `SN-VF2026-${Math.floor(10000 + Math.random() * 90000)}`;
+        const now = new Date();
+        const formattedDate = `${now.toLocaleDateString('ca-ES')} ${now.toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' })}`;
 
-        if (!SCRIPT_URL) {
-            // Mock success for UI testing if no URL provided
-            setTimeout(() => {
-                setStatus('success');
-            }, 1500);
-            return;
-        }
+        const registrationRecord = {
+            id: ticketId,
+            createdAt: formattedDate,
+            event: event.title,
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            phone: formData.phone.trim(),
+            dni: formData.dni.trim() || 'N/D',
+            level: formData.level,
+            emergencyContact: formData.emergencyContact.trim() || 'No especificat',
+            comments: formData.comments.trim()
+        };
 
-        try {
-            const response = await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors', // Important for Google Apps Script
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'register',
-                    event: event.title,
-                    data: formData
-                })
-            });
-            setStatus('success');
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            setStatus('error');
-        }
+        // 1. Save locally so it's instantly available in UI
+        saveRegistrationToStorage(registrationRecord);
+
+        // 2. Submit to Google Apps Script & Trigger Emails
+        const emailResult = await sendConfirmationEmail(registrationRecord);
+        setEmailNotice(emailResult.message || `Inscripció i correu processats per a ${formData.email}`);
+
+        setConfirmedTicket(registrationRecord);
+        setStatus('success');
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+    const handlePrintTicket = () => {
+        window.print();
+    };
+
+    const handleReset = () => {
+        setStatus('idle');
+        setConfirmedTicket(null);
+        setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            dni: '',
+            level: 'Principiant / Primera vegada',
+            emergencyContact: '',
+            comments: ''
+        });
+        onClose();
     };
 
     return (
@@ -62,8 +85,8 @@ const EventModal = ({ isOpen, onClose, event }) => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={onClose}
-                        className="fixed inset-0 bg-stone-900/40 backdrop-blur-sm z-50"
+                        onClick={handleReset}
+                        className="fixed inset-0 bg-stone-950/70 backdrop-blur-md z-50 transition-opacity"
                     />
 
                     {/* Modal */}
@@ -73,124 +96,299 @@ const EventModal = ({ isOpen, onClose, event }) => {
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         className="fixed inset-0 flex items-center justify-center z-50 p-4 pointer-events-none"
                     >
-                        <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl pointer-events-auto overflow-hidden flex flex-col max-h-[90vh]">
+                        <div className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl pointer-events-auto overflow-hidden flex flex-col max-h-[92vh] border border-stone-200">
                             {/* Header */}
-                            <div className="p-6 bg-stone-50 border-b border-stone-100 flex justify-between items-start">
-                                <div>
-                                    <h3 className="text-sm font-bold text-alpine-600 uppercase tracking-widest mb-1">Inscripció</h3>
-                                    <h2 className="text-2xl font-display font-bold text-stone-900">{event.title}</h2>
-                                    <p className="text-stone-500 text-sm mt-1">{event.date} {event.month} {event.year} • {event.time}</p>
+                            <div className="p-6 bg-gradient-to-r from-alpine-950 via-alpine-900 to-slate-900 text-white relative">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <span className="px-3 py-1 bg-amber-400/20 text-amber-300 border border-amber-400/30 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+                                                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                                                Inscripció Oficial 2026
+                                            </span>
+                                        </div>
+                                        <h2 className="text-2xl md:text-3xl font-display font-bold tracking-tight text-white">
+                                            {event.title}
+                                        </h2>
+                                        <p className="text-alpine-200 text-sm mt-1 flex flex-wrap items-center gap-4">
+                                            <span className="flex items-center gap-1">
+                                                <Calendar className="w-4 h-4 text-amber-400" />
+                                                {event.fullDate || `${event.date} ${event.month} ${event.year}`}
+                                            </span>
+                                            <span className="flex items-center gap-1">
+                                                <MapPin className="w-4 h-4 text-amber-400" />
+                                                {event.location}
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={handleReset}
+                                        className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+                                        aria-label="Tancar modal"
+                                    >
+                                        <X className="w-6 h-6" />
+                                    </button>
                                 </div>
-                                <button
-                                    onClick={onClose}
-                                    className="p-2 text-stone-400 hover:text-stone-600 hover:bg-stone-100 rounded-full transition-colors"
-                                >
-                                    <X className="w-5 h-5" />
-                                </button>
                             </div>
 
-                            {/* Content */}
-                            <div className="p-6 overflow-y-auto">
-                                {status === 'success' ? (
-                                    <div className="py-12 flex flex-col items-center text-center">
-                                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                                            <CheckCircle className="w-8 h-8 text-green-600" />
+                            {/* Content area */}
+                            <div className="p-6 md:p-8 overflow-y-auto">
+                                {status === 'success' && confirmedTicket ? (
+                                    <div className="py-4 space-y-6">
+                                        <div className="bg-emerald-50 border border-emerald-200 text-emerald-900 p-4 rounded-2xl flex items-start gap-4">
+                                            <div className="w-10 h-10 bg-emerald-500 text-white rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                                                <CheckCircle className="w-6 h-6" />
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-lg text-emerald-950">Inscripció Confirmada amb Èxit!</h4>
+                                                <p className="text-sm text-emerald-800 mt-0.5">
+                                                    Gràcies, <strong>{confirmedTicket.name}</strong>! T'hem reservat la plaça per a la Via Ferrada Solidària.
+                                                </p>
+                                                <div className="mt-2 inline-flex items-center gap-2 text-xs font-semibold bg-emerald-100 text-emerald-900 px-3 py-1 rounded-lg">
+                                                    <Mail className="w-3.5 h-3.5 text-emerald-700" />
+                                                    {emailNotice}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <h3 className="text-2xl font-bold text-stone-800 mb-2">Inscripció Rebuda!</h3>
-                                        <p className="text-stone-600 max-w-xs mx-auto">
-                                            Gràcies per apuntar-te. Ens posarem en contacte amb tu aviat amb més detalls.
-                                        </p>
-                                        <button
-                                            onClick={onClose}
-                                            className="mt-8 px-6 py-2 bg-stone-100 font-bold text-stone-600 rounded-lg hover:bg-stone-200 transition-colors"
-                                        >
-                                            Tancar
-                                        </button>
+
+                                        {/* Digital Ticket Pass */}
+                                        <div className="border-2 border-dashed border-stone-300 rounded-3xl p-6 bg-stone-50 relative overflow-hidden shadow-inner">
+                                            <div className="flex justify-between items-center border-b border-stone-200 pb-4 mb-4">
+                                                <div>
+                                                    <span className="text-xs font-bold text-stone-400 uppercase tracking-widest block">Comprovant / Passi d'Accés</span>
+                                                    <span className="text-xl font-display font-bold text-alpine-900">{confirmedTicket.event}</span>
+                                                </div>
+                                                <div className="text-right">
+                                                    <span className="text-xs font-bold text-stone-400 uppercase tracking-widest block">Codi Reserva</span>
+                                                    <span className="text-sm font-mono font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded border border-amber-200">{confirmedTicket.id}</span>
+                                                </div>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-4">
+                                                <div>
+                                                    <span className="text-xs font-semibold text-stone-500 block">Participant:</span>
+                                                    <span className="font-bold text-stone-800">{confirmedTicket.name}</span>
+                                                </div>
+                                                <div>
+                                                    <span className="text-xs font-semibold text-stone-500 block">DNI / NIF:</span>
+                                                    <span className="font-bold text-stone-800">{confirmedTicket.dni}</span>
+                                                </div>
+                                                <div>
+                                                    <span className="text-xs font-semibold text-stone-500 block">Correu Electrònic:</span>
+                                                    <span className="font-bold text-stone-800">{confirmedTicket.email}</span>
+                                                </div>
+                                                <div>
+                                                    <span className="text-xs font-semibold text-stone-500 block">Telèfon:</span>
+                                                    <span className="font-bold text-stone-800">{confirmedTicket.phone}</span>
+                                                </div>
+                                                <div className="md:col-span-2">
+                                                    <span className="text-xs font-semibold text-stone-500 block">Nivell d'escalada:</span>
+                                                    <span className="font-bold text-alpine-700">{confirmedTicket.level}</span>
+                                                </div>
+                                            </div>
+
+                                            {confirmedTicket.emergencyContact && (
+                                                <div className="border-t border-stone-200 pt-3 text-xs text-stone-600">
+                                                    <strong>Contacte d'emergència:</strong> {confirmedTicket.emergencyContact}
+                                                </div>
+                                            )}
+
+                                            <div className="mt-4 pt-4 border-t border-stone-200 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-stone-500">
+                                                <div className="flex items-center gap-1.5">
+                                                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                                                    <span>Inscripció oficial registrada a Sense Nord</span>
+                                                </div>
+                                                <span className="font-mono text-stone-400">{confirmedTicket.createdAt}</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Action buttons */}
+                                        <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                                            <button
+                                                onClick={handlePrintTicket}
+                                                className="flex-1 py-3 px-4 bg-stone-900 hover:bg-stone-800 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-md cursor-pointer"
+                                            >
+                                                <Download className="w-4 h-4" />
+                                                Imprimir / Desar Passi
+                                            </button>
+                                            <button
+                                                onClick={handleReset}
+                                                className="py-3 px-6 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold rounded-xl transition-colors cursor-pointer"
+                                            >
+                                                Tancar
+                                            </button>
+                                        </div>
                                     </div>
                                 ) : (
-                                    <form onSubmit={handleSubmit} className="space-y-4">
+                                    <form onSubmit={handleSubmit} className="space-y-5">
+                                        <div className="bg-amber-50/80 border border-amber-200/80 p-4 rounded-2xl text-xs text-amber-900 flex items-start gap-3">
+                                            <Mountain className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                                            <div>
+                                                <span className="font-bold block text-amber-950 text-sm">Informació de la Via Ferrada Solidària</span>
+                                                {event.description || "Inscripció oberta per a tots els edats. Material tècnic i assegurança d'activitat inclosos."}
+                                            </div>
+                                        </div>
+
+                                        {/* Name & DNI */}
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                            <div className="md:col-span-2">
+                                                <label htmlFor="name" className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                                    Nom i Cognoms *
+                                                </label>
+                                                <div className="relative">
+                                                    <User className="w-4 h-4 text-stone-400 absolute left-3.5 top-3.5" />
+                                                    <input
+                                                        type="text"
+                                                        id="name"
+                                                        name="name"
+                                                        required
+                                                        value={formData.name}
+                                                        onChange={handleChange}
+                                                        className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none text-sm transition-all"
+                                                        placeholder="Ex: Pau Garcia Soler"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label htmlFor="dni" className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                                    DNI / NIF / Passaport *
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    id="dni"
+                                                    name="dni"
+                                                    required
+                                                    value={formData.dni}
+                                                    onChange={handleChange}
+                                                    className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none text-sm transition-all uppercase"
+                                                    placeholder="12345678X"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Contact: Email & Phone */}
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label htmlFor="email" className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                                    Correu Electrònic *
+                                                </label>
+                                                <div className="relative">
+                                                    <Mail className="w-4 h-4 text-stone-400 absolute left-3.5 top-3.5" />
+                                                    <input
+                                                        type="email"
+                                                        id="email"
+                                                        name="email"
+                                                        required
+                                                        value={formData.email}
+                                                        onChange={handleChange}
+                                                        className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none text-sm transition-all"
+                                                        placeholder="el-teu-correu@exemple.com"
+                                                    />
+                                                </div>
+                                                <span className="text-[11px] text-stone-400 mt-1 block">Rebràs la confirmació i informació de la ruta.</span>
+                                            </div>
+
+                                            <div>
+                                                <label htmlFor="phone" className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                                    Telèfon de Mòbil *
+                                                </label>
+                                                <div className="relative">
+                                                    <Phone className="w-4 h-4 text-stone-400 absolute left-3.5 top-3.5" />
+                                                    <input
+                                                        type="tel"
+                                                        id="phone"
+                                                        name="phone"
+                                                        required
+                                                        value={formData.phone}
+                                                        onChange={handleChange}
+                                                        className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none text-sm transition-all"
+                                                        placeholder="+34 612 345 678"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Experience Level */}
                                         <div>
-                                            <label htmlFor="name" className="block text-sm font-bold text-stone-700 mb-1">Nom complet</label>
+                                            <label htmlFor="level" className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                                Nivell d'Experiència en Vies Ferrades
+                                            </label>
+                                            <select
+                                                id="level"
+                                                name="level"
+                                                value={formData.level}
+                                                onChange={handleChange}
+                                                className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none text-sm transition-all bg-white"
+                                            >
+                                                <option value="Principiant / Primera vegada">Principiant / Primera vegada (Taller d'iniciació)</option>
+                                                <option value="Intermedi (He fet alguna via ferrada)">Intermedi (He realitzat alguna via ferrada)</option>
+                                                <option value="Avançat / Autònom">Avançat / Autònom</option>
+                                            </select>
+                                        </div>
+
+                                        {/* Emergency contact */}
+                                        <div>
+                                            <label htmlFor="emergencyContact" className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                                Contacte d'Emergència (Nom i Telèfon) *
+                                            </label>
                                             <input
                                                 type="text"
-                                                id="name"
-                                                name="name"
+                                                id="emergencyContact"
+                                                name="emergencyContact"
                                                 required
-                                                value={formData.name}
+                                                value={formData.emergencyContact}
                                                 onChange={handleChange}
-                                                className="w-full px-4 py-3 rounded-lg border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none transition-all"
-                                                placeholder="Ex: Maria Vila"
+                                                className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none text-sm transition-all"
+                                                placeholder="Ex: Marta Vila (Mare) - +34 666 777 888"
                                             />
                                         </div>
 
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <div>
-                                                <label htmlFor="email" className="block text-sm font-bold text-stone-700 mb-1">Correu electrònic</label>
-                                                <input
-                                                    type="email"
-                                                    id="email"
-                                                    name="email"
-                                                    required
-                                                    value={formData.email}
-                                                    onChange={handleChange}
-                                                    className="w-full px-4 py-3 rounded-lg border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none transition-all"
-                                                    placeholder="maria@exemple.com"
-                                                />
-                                            </div>
-                                            <div>
-                                                <label htmlFor="phone" className="block text-sm font-bold text-stone-700 mb-1">Telèfon</label>
-                                                <input
-                                                    type="tel"
-                                                    id="phone"
-                                                    name="phone"
-                                                    required
-                                                    value={formData.phone}
-                                                    onChange={handleChange}
-                                                    className="w-full px-4 py-3 rounded-lg border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none transition-all"
-                                                    placeholder="+376 123 456"
-                                                />
-                                            </div>
-                                        </div>
-
+                                        {/* Comments */}
                                         <div>
-                                            <label htmlFor="comments" className="block text-sm font-bold text-stone-700 mb-1">Comentaris (opcional)</label>
+                                            <label htmlFor="comments" className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                                Observacions o Material requerit (opcional)
+                                            </label>
                                             <textarea
                                                 id="comments"
                                                 name="comments"
-                                                rows={3}
+                                                rows={2}
                                                 value={formData.comments}
                                                 onChange={handleChange}
-                                                className="w-full px-4 py-3 rounded-lg border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none transition-all resize-none"
-                                                placeholder="Tens alguna al·lèrgia o necessitat especial?"
+                                                className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none text-sm transition-all resize-none"
+                                                placeholder="Escriu qualsevol informació d'interès per als guies..."
                                             />
                                         </div>
 
                                         {status === 'error' && (
-                                            <div className="p-3 bg-red-50 text-red-600 rounded-lg text-sm flex items-center gap-2">
-                                                <AlertCircle className="w-4 h-4" />
-                                                Hi ha hagut un error. Torna-ho a provar.
+                                            <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-xl text-xs flex items-center gap-2">
+                                                <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                                                Hi ha hagut un error en processar la inscripció. Comprova les dades i torna-ho a provar.
                                             </div>
                                         )}
 
+                                        {/* Submit button */}
                                         <button
                                             type="submit"
                                             disabled={status === 'submitting'}
-                                            className={`w-full py-4 mt-4 font-bold uppercase tracking-widest text-white rounded-lg transition-all flex items-center justify-center gap-2 ${status === 'submitting'
-                                                ? 'bg-stone-400 cursor-not-allowed'
-                                                : 'bg-alpine-600 hover:bg-alpine-500 shadow-lg hover:shadow-xl hover:-translate-y-px'
+                                            className={`w-full py-4 mt-2 font-display font-bold uppercase tracking-widest text-white rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer ${status === 'submitting'
+                                                    ? 'bg-stone-400 cursor-not-allowed'
+                                                    : 'bg-gradient-to-r from-amber-500 to-alpine-600 hover:from-amber-600 hover:to-alpine-700 shadow-amber-900/20 hover:shadow-xl hover:-translate-y-0.5'
                                                 }`}
                                         >
                                             {status === 'submitting' ? (
                                                 <>
                                                     <Loader2 className="w-5 h-5 animate-spin" />
-                                                    Enviant...
+                                                    Processant inscripció...
                                                 </>
                                             ) : (
-                                                'Confirmar Inscripció'
+                                                <>
+                                                    <Ticket className="w-5 h-5" />
+                                                    Confirmar Inscripció i Enviar Correu
+                                                </>
                                             )}
                                         </button>
-                                        <p className="text-xs text-center text-stone-400 mt-2">
-                                            Les teves dades es tractaran amb confidencialitat per gestionar l'esdeveniment.
+                                        <p className="text-[11px] text-center text-stone-400">
+                                            Les dades s'utilitzaran exclusivament per a l'organització i assegurança de la Via Ferrada Solidària.
                                         </p>
                                     </form>
                                 )}
