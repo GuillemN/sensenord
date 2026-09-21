@@ -47,9 +47,9 @@ const EventList = () => {
                             <Sparkles className="w-3.5 h-3.5 text-alpine-600" />
                             Agenda d'Activitats 2026
                         </div>
-                        <h2 className="text-4xl md:text-6xl font-display font-bold text-alpine-950 uppercase">Properes Fites</h2>
+                        <h2 className="text-4xl md:text-6xl font-display font-bold text-alpine-950 uppercase">Propers Esdeveniments</h2>
                         <p className="text-lg text-stone-600 font-light mt-2">
-                            Participa en les nostres jornades d'escalada, muntanya i solidaritat.
+                            Participa en les nostres jornades d'escalada, gastronomia i solidaritat.
                         </p>
                     </div>
                 </div>

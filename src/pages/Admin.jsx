@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Lock, Loader2, Download, Table, Trash2, Plus, RefreshCw, CheckCircle, Search, Filter, ShieldCheck, Mail, Phone, User, FileSpreadsheet, AlertCircle, MessageSquare, HeartPulse } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { getStoredRegistrations, deleteRegistrationFromStorage, saveRegistrationToStorage, exportToCSV } from '../services/registrationService';
+import { getStoredRegistrations, deleteRegistrationFromStorage, saveRegistrationToStorage, exportToCSV, getDeletedRegistrationIds } from '../services/registrationService';
 
 const Admin = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -29,8 +29,11 @@ const Admin = () => {
         setLoading(true);
         setError(null);
 
+        const deletedSet = new Set(getDeletedRegistrationIds().map(String));
+
         // 1. Get local storage registrations
-        const localList = getStoredRegistrations();
+        const localList = (Array.isArray(getStoredRegistrations()) ? getStoredRegistrations() : [])
+            .filter(item => item && !deletedSet.has(String(item.id)));
 
         // 2. Fetch remote Google Script if configured
         if (!SCRIPT_URL) {
@@ -64,10 +67,11 @@ const Admin = () => {
                             event: String(item.event || 'Via Ferrada Solidària'),
                             comments: String(item.comments || '-')
                         };
-                    });
+                    })
+                    .filter(item => !deletedSet.has(String(item.id)));
 
                 const mergedMap = new Map();
-                (Array.isArray(localList) ? localList : []).forEach(item => {
+                localList.forEach(item => {
                     if (item && item.id) mergedMap.set(String(item.id), item);
                 });
                 processedData.forEach(item => {
@@ -76,12 +80,12 @@ const Admin = () => {
 
                 setData(Array.from(mergedMap.values()));
             } else {
-                setData(Array.isArray(localList) ? localList : []);
+                setData(localList);
             }
         } catch (err) {
             console.warn('Error connecting to Google Sheets:', err);
             setError('Nota: Mostrant inscripcions des de l\'emmagatzematge local (Google Sheet no connectat o enllaç pendent de desplegar).');
-            setData(Array.isArray(localList) ? localList : []);
+            setData(localList);
         } finally {
             setLoading(false);
         }
@@ -96,9 +100,9 @@ const Admin = () => {
         }
     }, [isAuthenticated]);
 
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
         if (window.confirm(`Segur que vols eliminar la inscripció ${id}?`)) {
-            deleteRegistrationFromStorage(id);
+            await deleteRegistrationFromStorage(id);
             fetchData();
         }
     };

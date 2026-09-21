@@ -14,7 +14,7 @@ const Navbar = () => {
       setScrolled(window.scrollY > 50);
 
       // Scroll Spy Logic
-      const sections = ['hero', 'projects', 'events'];
+      const sections = ['hero', 'events', 'projects'];
       const current = sections.find(section => {
         const element = document.getElementById(section);
         if (element) {
@@ -36,8 +36,8 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Inici', href: '/#hero', id: 'hero' },
-    { name: 'Projectes', href: '/#projects', id: 'projects' },
     { name: 'Esdeveniments', href: '/#events', id: 'events' },
+    { name: 'Projectes', href: '/#projects', id: 'projects' },
     { name: 'Qui Som', href: '/about', id: 'about' },
     { name: 'Contacte', href: '/contact', id: 'contact' },
   ];

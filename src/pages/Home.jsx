@@ -13,8 +13,8 @@ const Home = () => {
             transition={{ duration: 0.5 }}
         >
             <Hero />
-            <ProjectList />
             <EventList />
+            <ProjectList />
         </motion.div>
     );
 };

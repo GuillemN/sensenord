@@ -58,11 +58,44 @@ export const saveRegistrationToStorage = (data) => {
     }
 };
 
-export const deleteRegistrationFromStorage = (id) => {
+const DELETED_KEY = 'sensenord_deleted_ids_v1';
+
+export const getDeletedRegistrationIds = () => {
     try {
+        const item = localStorage.getItem(DELETED_KEY);
+        if (!item) return [];
+        const parsed = JSON.parse(item);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+        return [];
+    }
+};
+
+export const deleteRegistrationFromStorage = async (id) => {
+    try {
+        const targetIdStr = String(id);
         const current = getStoredRegistrations();
-        const updated = current.filter(item => item && item.id !== id);
+        const updated = current.filter(item => item && String(item.id) !== targetIdStr);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+
+        const deletedList = getDeletedRegistrationIds();
+        if (!deletedList.includes(targetIdStr)) {
+            deletedList.push(targetIdStr);
+            localStorage.setItem(DELETED_KEY, JSON.stringify(deletedList));
+        }
+
+        const scriptUrl = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
+        if (scriptUrl) {
+            try {
+                await fetch(`${scriptUrl}?action=delete&id=${encodeURIComponent(targetIdStr)}`, {
+                    method: 'POST',
+                    mode: 'no-cors'
+                });
+            } catch (err) {
+                console.warn('Google Script delete notification error:', err);
+            }
+        }
+
         window.dispatchEvent(new Event('sensenord_registration_added'));
         return true;
     } catch (e) {
