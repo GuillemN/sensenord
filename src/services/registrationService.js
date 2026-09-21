@@ -37,7 +37,8 @@ export const getStoredRegistrations = () => {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_REGISTRATIONS));
             return DEFAULT_REGISTRATIONS;
         }
-        return JSON.parse(item);
+        const parsed = JSON.parse(item);
+        return Array.isArray(parsed) ? parsed : DEFAULT_REGISTRATIONS;
     } catch (e) {
         console.error('Error reading local storage registrations:', e);
         return DEFAULT_REGISTRATIONS;
@@ -60,7 +61,7 @@ export const saveRegistrationToStorage = (data) => {
 export const deleteRegistrationFromStorage = (id) => {
     try {
         const current = getStoredRegistrations();
-        const updated = current.filter(item => item.id !== id);
+        const updated = current.filter(item => item && item.id !== id);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
         window.dispatchEvent(new Event('sensenord_registration_added'));
         return true;
@@ -174,7 +175,7 @@ export const sendConfirmationEmail = async (registration) => {
 };
 
 export const exportToCSV = (dataList) => {
-    if (!dataList || dataList.length === 0) return;
+    if (!Array.isArray(dataList) || dataList.length === 0) return;
 
     const headers = ['Codi Inscripció', 'Data/Hora', 'Esdeveniment', 'Nom i Cognoms', 'Email', 'Telèfon', 'DNI/NIF', 'Nivell', 'Contacte Emergència', 'Comentaris'];
 
@@ -182,17 +183,18 @@ export const exportToCSV = (dataList) => {
     csvRows.push(headers.join(';'));
 
     dataList.forEach(item => {
+        if (!item) return;
         const row = [
-            `"${item.id || '-'}"`,
-            `"${item.createdAt || item.timestamp || '-'}"`,
-            `"${item.event || '-'}"`,
-            `"${item.name || '-'}"`,
-            `"${item.email || '-'}"`,
-            `"${item.phone || '-'}"`,
-            `"${item.dni || '-'}"`,
-            `"${item.level || '-'}"`,
-            `"${item.emergencyContact || '-'}"`,
-            `"${(item.comments || '-').replace(/"/g, '""')}"`
+            `"${String(item.id || '-').replace(/"/g, '""')}"`,
+            `"${String(item.createdAt || item.timestamp || '-').replace(/"/g, '""')}"`,
+            `"${String(item.event || '-').replace(/"/g, '""')}"`,
+            `"${String(item.name || '-').replace(/"/g, '""')}"`,
+            `"${String(item.email || '-').replace(/"/g, '""')}"`,
+            `"${String(item.phone || '-').replace(/"/g, '""')}"`,
+            `"${String(item.dni || '-').replace(/"/g, '""')}"`,
+            `"${String(item.level || '-').replace(/"/g, '""')}"`,
+            `"${String(item.emergencyContact || '-').replace(/"/g, '""')}"`,
+            `"${String(item.comments || '-').replace(/"/g, '""')}"`
         ];
         csvRows.push(row.join(';'));
     });

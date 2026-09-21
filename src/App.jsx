@@ -35,6 +35,8 @@ const AnimatedRoutes = () => {
 
 import ScrollToAnchor from './components/ScrollToAnchor';
 
+import ErrorBoundary from './components/ErrorBoundary';
+
 function App() {
   return (
     <Router>
@@ -42,7 +44,9 @@ function App() {
       <div className="min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-grow">
-          <AnimatedRoutes />
+          <ErrorBoundary>
+            <AnimatedRoutes />
+          </ErrorBoundary>
         </main>
         <Footer />
       </div>

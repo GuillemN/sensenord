@@ -42,40 +42,46 @@ const Admin = () => {
         try {
             const response = await fetch(`${SCRIPT_URL}?action=read`);
             const result = await response.json();
-            if (result.status === 'success' && Array.isArray(result.data)) {
-                const processedData = result.data.map((item, idx) => {
-                    const date = new Date(item.timestamp || item.createdAt);
-                    const formattedDate = !isNaN(date.getTime())
-                        ? date.toLocaleDateString('ca-ES') + ' ' + date.toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' })
-                        : item.timestamp || item.createdAt || '-';
+            if (result && result.status === 'success' && Array.isArray(result.data)) {
+                const processedData = result.data
+                    .filter(Boolean)
+                    .map((item, idx) => {
+                        const date = new Date(item.timestamp || item.createdAt);
+                        const formattedDate = !isNaN(date.getTime())
+                            ? date.toLocaleDateString('ca-ES') + ' ' + date.toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' })
+                            : String(item.timestamp || item.createdAt || '-');
 
-                    return {
-                        id: item.id || `REM-${idx + 1}`,
-                        timestamp: formattedDate,
-                        createdAt: formattedDate,
-                        name: item.name || '-',
-                        email: item.email || '-',
-                        phone: item.phone || '-',
-                        dni: item.dni || '-',
-                        level: item.level || 'No especificat',
-                        emergencyContact: item.emergencyContact || '-',
-                        event: item.event || 'Via Ferrada Solidària',
-                        comments: item.comments || '-'
-                    };
-                });
+                        return {
+                            id: String(item.id || `REM-${idx + 1}`),
+                            timestamp: formattedDate,
+                            createdAt: formattedDate,
+                            name: String(item.name || '-'),
+                            email: String(item.email || '-'),
+                            phone: String(item.phone || '-'),
+                            dni: String(item.dni || '-'),
+                            level: String(item.level || 'No especificat'),
+                            emergencyContact: String(item.emergencyContact || '-'),
+                            event: String(item.event || 'Via Ferrada Solidària'),
+                            comments: String(item.comments || '-')
+                        };
+                    });
 
                 const mergedMap = new Map();
-                localList.forEach(item => mergedMap.set(item.id, item));
-                processedData.forEach(item => mergedMap.set(item.id, item));
+                (Array.isArray(localList) ? localList : []).forEach(item => {
+                    if (item && item.id) mergedMap.set(String(item.id), item);
+                });
+                processedData.forEach(item => {
+                    if (item && item.id) mergedMap.set(String(item.id), item);
+                });
 
                 setData(Array.from(mergedMap.values()));
             } else {
-                setData(localList);
+                setData(Array.isArray(localList) ? localList : []);
             }
         } catch (err) {
             console.warn('Error connecting to Google Sheets:', err);
             setError('Nota: Mostrant inscripcions des de l\'emmagatzematge local (Google Sheet no connectat o enllaç pendent de desplegar).');
-            setData(localList);
+            setData(Array.isArray(localList) ? localList : []);
         } finally {
             setLoading(false);
         }
@@ -119,27 +125,29 @@ const Admin = () => {
         exportToCSV(filteredData);
     };
 
-    const uniqueEvents = ['all', ...new Set(data.map(item => item.event).filter(Boolean))];
+    const uniqueEvents = ['all', ...new Set((Array.isArray(data) ? data : []).map(item => String(item?.event || '')).filter(Boolean))];
 
-    const stats = data.reduce((acc, item) => {
-        if (!item.event) return acc;
-        acc[item.event] = (acc[item.event] || 0) + 1;
+    const stats = (Array.isArray(data) ? data : []).reduce((acc, item) => {
+        if (!item || !item.event) return acc;
+        const evKey = String(item.event);
+        acc[evKey] = (acc[evKey] || 0) + 1;
         return acc;
     }, {});
 
-    const filteredData = data.filter(item => {
+    const filteredData = (Array.isArray(data) ? data : []).filter(item => {
+        if (!item) return false;
         if (!item.name && !item.event) return false;
 
-        const matchesEvent = selectedEvent === 'all' || item.event === selectedEvent;
-        const searchLower = searchTerm.toLowerCase();
+        const matchesEvent = selectedEvent === 'all' || String(item.event) === selectedEvent;
+        const searchLower = String(searchTerm || '').toLowerCase();
         const matchesSearch =
-            (item.name || '').toLowerCase().includes(searchLower) ||
-            (item.email || '').toLowerCase().includes(searchLower) ||
-            (item.dni || '').toLowerCase().includes(searchLower) ||
-            (item.phone || '').toLowerCase().includes(searchLower) ||
-            (item.emergencyContact || '').toLowerCase().includes(searchLower) ||
-            (item.comments || '').toLowerCase().includes(searchLower) ||
-            (item.id || '').toLowerCase().includes(searchLower);
+            String(item.name || '').toLowerCase().includes(searchLower) ||
+            String(item.email || '').toLowerCase().includes(searchLower) ||
+            String(item.dni || '').toLowerCase().includes(searchLower) ||
+            String(item.phone || '').toLowerCase().includes(searchLower) ||
+            String(item.emergencyContact || '').toLowerCase().includes(searchLower) ||
+            String(item.comments || '').toLowerCase().includes(searchLower) ||
+            String(item.id || '').toLowerCase().includes(searchLower);
 
         return matchesEvent && matchesSearch;
     });
@@ -339,10 +347,10 @@ const Admin = () => {
                                         </td>
 
                                         <td className="p-4 text-xs">
-                                            {row.emergencyContact && row.emergencyContact !== '-' && row.emergencyContact !== 'No especificat' ? (
+                                            {row.emergencyContact && String(row.emergencyContact) !== '-' && String(row.emergencyContact) !== 'No especificat' ? (
                                                 <div className="flex items-start gap-1.5 bg-amber-50/80 border border-amber-200 text-amber-950 p-2 rounded-xl text-xs font-medium">
                                                     <HeartPulse className="w-3.5 h-3.5 text-amber-600 flex-shrink-0 mt-0.5" />
-                                                    <span>{row.emergencyContact}</span>
+                                                    <span>{String(row.emergencyContact)}</span>
                                                 </div>
                                             ) : (
                                                 <span className="text-stone-400 italic text-xs">No indicat</span>
@@ -350,10 +358,10 @@ const Admin = () => {
                                         </td>
 
                                         <td className="p-4 text-xs">
-                                            {row.comments && row.comments !== '-' && row.comments.trim() !== '' ? (
+                                            {row.comments && String(row.comments) !== '-' && String(row.comments).trim() !== '' ? (
                                                 <div className="flex items-start gap-1.5 bg-slate-50 border border-slate-200 text-slate-800 p-2 rounded-xl text-xs max-w-xs">
                                                     <MessageSquare className="w-3.5 h-3.5 text-slate-500 flex-shrink-0 mt-0.5" />
-                                                    <span className="line-clamp-2" title={row.comments}>{row.comments}</span>
+                                                    <span className="line-clamp-2" title={String(row.comments)}>{String(row.comments)}</span>
                                                 </div>
                                             ) : (
                                                 <span className="text-stone-300 italic text-xs">Sense observacions</span>
