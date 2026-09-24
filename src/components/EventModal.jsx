@@ -13,46 +13,40 @@ const getEventConfig = (event) => {
             IconComponent: Utensils,
             infoTitle: `Informació de la ${event?.title || 'Botifarrada Popular'}`,
             infoDescription: event?.description || "Dinar festiu de germanor amb opció vegetariana/vegana i begudes incloses.",
+            priceTag: "10€",
+            limitedSpots: false,
+            beneficiaryNotice: "Tots els beneficis aniran destinats a l'ADF Gavarres Marítima",
+            hasLevelField: true,
             levelLabel: "Opció de Menú / Dietari *",
             levelOptions: [
                 { value: 'Botifarra Tradicional (Carn)', label: 'Menú Tradicional (Botifarra de porc + pa amb tomàquet)' },
-                { value: 'Opció Vegetariana / Vegana', label: 'Menú Vegetarià / Vegà' },
-                { value: 'Menú Infantil', label: 'Menú Infantil (Fins a 12 anys)' }
+                { value: 'Opció Vegetariana / Vegana', label: 'Menú Vegetarià / Vegà' }
             ],
             defaultLevel: 'Botifarra Tradicional (Carn)',
-            emergencyLabel: "Contacte o Acompanyants (Opcional)",
-            emergencyRequired: false,
-            emergencyPlaceholder: "Ex: Venc amb 2 acompanyants / Telèfon de contacte",
-            commentsLabel: "Intoleràncies Alimentàries o Al·lèrgies (Opcional)",
-            commentsPlaceholder: "Escriu si tens al·lèrgies (celiaquia, lactosa...) o observacions pel dinar...",
+            hasEmergencyField: false,
+            hasCommentsField: false,
             ticketLevelHeading: "Opció de Menú:",
-            footerNote: `Les dades s'utilitzaran exclusivament per a la reserva de la ${event?.title || 'Botifarrada Popular'}.`
+            footerNote: `Les dades s'utilitzaran exclusivament per a la reserva de la Botifarrada Popular.`
         };
     }
 
-    if (id === 'tast-vi-2026' || title.includes('hericamps')) {
+    if (id === 'tast-vi-2026' || title.includes('hericamps') || title.includes('tast')) {
         return {
             type: 'tast_vi',
             IconComponent: Wine,
             infoTitle: `Informació de l'esdeveniment: ${event?.title || 'Tast de vins amb Hericamps'}`,
             infoDescription: event?.description || "Tast de 3 copes de vi ecològic i d'oli artesanal amb el celler Hericamps.",
-            levelLabel: "Preferències de Tast *",
-            levelOptions: [
-                { value: 'Tast 3 copes de vi Hericamps', label: 'Tast de 3 copes de vi ecològic i explicacions' },
-                { value: 'Opcions sense alcohol / Most', label: 'Opció Tast Sense Alcohol / Most' }
-            ],
-            defaultLevel: 'Tast 3 copes de vi Hericamps',
-            emergencyLabel: "Acompanyants o Reserva (Opcional)",
-            emergencyRequired: false,
-            emergencyPlaceholder: "Ex: Venc en parella / Grup de 3 persones",
-            commentsLabel: "Observacions o Al·lèrgies (Opcional)",
-            commentsPlaceholder: "Escriu si tens al·lèrgies o consultes pel celler...",
-            ticketLevelHeading: "Modalitat de Tast:",
-            footerNote: `Les dades s'utilitzaran exclusivament per a la gestió del ${event?.title || 'Tast de vins'}.`
+            priceTag: "8€",
+            limitedSpots: true,
+            beneficiaryNotice: "Tots els beneficis aniran destinats a l'ADF Gavarres Marítima",
+            hasLevelField: false,
+            defaultLevel: 'Tast 3 copes de vi Hericamps (8€)',
+            hasEmergencyField: false,
+            hasCommentsField: false,
+            ticketLevelHeading: "Activitat:",
+            footerNote: `Les dades s'utilitzaran exclusivament per a la gestió del Tast de Vins.`
         };
     }
-
-
 
     if (id === 'visita-incendi-2026' || title.includes('incendi') || title.includes('gavarres')) {
         return {
@@ -60,16 +54,13 @@ const getEventConfig = (event) => {
             IconComponent: Trees,
             infoTitle: `Informació de la ${event?.title || 'Visita comentada a l\'incendi de Gavarres'}`,
             infoDescription: event?.description || "Visita comentada amb l'ADF Gavarres Marítima per conèixer l'impacte de l'incendi i la prevenció.",
-            levelLabel: "Assistència *",
-            levelOptions: [
-                { value: 'General / Tots els públics', label: 'General / Assistència lliure' }
-            ],
-            defaultLevel: 'General / Tots els públics',
-            emergencyLabel: "Contacte d'Emergència o Acompanyants (Opcional)",
-            emergencyRequired: false,
-            emergencyPlaceholder: "Ex: Telèfon d'emergència o acompanyants...",
-            commentsLabel: "Observacions (Opcional)",
-            commentsPlaceholder: "Escriu qualsevol dubte o observació per a l'ADF Gavarres Marítima...",
+            priceTag: "Gratuït / Aportació voluntària",
+            limitedSpots: true,
+            beneficiaryNotice: "Tots els beneficis aniran destinats a l'ADF Gavarres Marítima",
+            hasLevelField: false,
+            defaultLevel: 'Visita Guiada Incendi Gavarres',
+            hasEmergencyField: false,
+            hasCommentsField: false,
             ticketLevelHeading: "Tipus d'assistència:",
             footerNote: `Les dades s'utilitzaran exclusivament per a l'organització de la Visita a l'Incendi de Gavarres.`
         };
@@ -81,6 +72,10 @@ const getEventConfig = (event) => {
         IconComponent: Mountain,
         infoTitle: `Informació de la ${event?.title || 'Via Ferrada Solidària'}`,
         infoDescription: event?.description || "Jornada d'escalada i via ferrada solidària. Material tècnic i assegurança inclosos.",
+        priceTag: "Preu voluntari (Taquilla inversa)",
+        limitedSpots: true,
+        beneficiaryNotice: "Tots els beneficis aniran destinats a l'ADF Gavarres Marítima",
+        hasLevelField: true,
         levelLabel: "Nivell d'Experiència en Vies Ferrades *",
         levelOptions: [
             { value: 'Principiant / Primera vegada', label: "Principiant / Primera vegada (Taller d'iniciació)" },
@@ -88,13 +83,15 @@ const getEventConfig = (event) => {
             { value: 'Avançat / Autònom', label: "Avançat / Autònom" }
         ],
         defaultLevel: 'Principiant / Primera vegada',
+        hasEmergencyField: true,
         emergencyLabel: "Contacte d'Emergència (Nom i Telèfon) *",
         emergencyRequired: true,
         emergencyPlaceholder: "Ex: Marta Vila (Mare) - +34 666 777 888",
+        hasCommentsField: true,
         commentsLabel: "Observacions o Material requerit (opcional)",
         commentsPlaceholder: "Escriu qualsevol informació d'interès per als guies, si portes equip propi...",
         ticketLevelHeading: "Nivell d'escalada:",
-        footerNote: `Les dades s'utilitzaran exclusivament per a l'organització i assegurança de la ${event?.title || 'Via Ferrada Solidària'}.`
+        footerNote: `Les dades s'utilitzaran exclusivament per a l'organització i assegurança de la Via Ferrada Solidària.`
     };
 };
 
@@ -136,7 +133,7 @@ const EventModal = ({ isOpen, onClose, event }) => {
         e.preventDefault();
         setStatus('submitting');
 
-        const prefix = config.type === 'botifarrada' ? 'BOT' : config.type === 'cata_vins' || config.type === 'tast_vi' ? 'VIN' : config.type === 'visita_incendi' ? 'ADF' : 'VF';
+        const prefix = config.type === 'botifarrada' ? 'BOT' : config.type === 'tast_vi' ? 'VIN' : config.type === 'visita_incendi' ? 'ADF' : 'VF';
         const ticketId = `SN-${prefix}2026-${Math.floor(10000 + Math.random() * 90000)}`;
         const now = new Date();
         const formattedDate = `${now.toLocaleDateString('ca-ES')} ${now.toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' })}`;
@@ -150,7 +147,7 @@ const EventModal = ({ isOpen, onClose, event }) => {
             phone: formData.phone.trim(),
             dni: formData.dni.trim() || 'N/D',
             level: formData.level || config.defaultLevel,
-            emergencyContact: formData.emergencyContact.trim() || (config.emergencyRequired ? 'No especificat' : '-'),
+            emergencyContact: formData.emergencyContact.trim() || '-',
             comments: formData.comments.trim() || '-'
         };
 
@@ -214,6 +211,11 @@ const EventModal = ({ isOpen, onClose, event }) => {
                                                 <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                                                 Inscripció Oficial 2026
                                             </span>
+                                            {config.limitedSpots && (
+                                                <span className="px-2.5 py-0.5 bg-red-500/30 text-red-200 border border-red-400/40 rounded-full text-xs font-bold uppercase tracking-wider">
+                                                    ⚠️ Places Limitades
+                                                </span>
+                                            )}
                                         </div>
                                         <h2 className="text-2xl md:text-3xl font-display font-bold tracking-tight text-white uppercase">
                                             {event.title}
@@ -289,10 +291,12 @@ const EventModal = ({ isOpen, onClose, event }) => {
                                                     <span className="text-xs font-semibold text-stone-500 block">Telèfon:</span>
                                                     <span className="font-bold text-stone-800">{confirmedTicket.phone}</span>
                                                 </div>
-                                                <div className="md:col-span-2">
-                                                    <span className="text-xs font-semibold text-stone-500 block">{config.ticketLevelHeading}</span>
-                                                    <span className="font-bold text-alpine-700">{confirmedTicket.level}</span>
-                                                </div>
+                                                {config.hasLevelField && (
+                                                    <div className="md:col-span-2">
+                                                        <span className="text-xs font-semibold text-stone-500 block">{config.ticketLevelHeading}</span>
+                                                        <span className="font-bold text-alpine-700">{confirmedTicket.level}</span>
+                                                    </div>
+                                                )}
                                             </div>
 
                                             {confirmedTicket.emergencyContact && confirmedTicket.emergencyContact !== '-' && (
@@ -331,9 +335,22 @@ const EventModal = ({ isOpen, onClose, event }) => {
                                     <form onSubmit={handleSubmit} className="space-y-5">
                                         <div className="bg-amber-50/80 border border-amber-200/80 p-4 rounded-2xl text-xs text-amber-900 flex items-start gap-3">
                                             <InfoIcon className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                                            <div>
+                                            <div className="space-y-1.5">
                                                 <span className="font-bold block text-amber-950 text-sm">{config.infoTitle}</span>
-                                                {config.infoDescription}
+                                                <p className="text-stone-700">{config.infoDescription}</p>
+                                                <div className="flex flex-wrap items-center gap-2 pt-1">
+                                                    <span className="px-2 py-0.5 bg-amber-200/70 text-amber-950 rounded font-bold text-[11px]">
+                                                        💰 Preu: {config.priceTag}
+                                                    </span>
+                                                    {config.limitedSpots && (
+                                                        <span className="px-2 py-0.5 bg-red-100 text-red-800 border border-red-200 rounded font-bold text-[11px]">
+                                                            ⚠️ Places Limitades
+                                                        </span>
+                                                    )}
+                                                    <span className="px-2 py-0.5 bg-emerald-100 text-emerald-900 border border-emerald-200 rounded font-semibold text-[11px]">
+                                                        🌱 {config.beneficiaryNotice}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -416,58 +433,64 @@ const EventModal = ({ isOpen, onClose, event }) => {
                                             </div>
                                         </div>
 
-                                        {/* Dynamic Select Field (Level / Menu / Tasting) */}
-                                        <div>
-                                            <label htmlFor="level" className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
-                                                {config.levelLabel}
-                                            </label>
-                                            <select
-                                                id="level"
-                                                name="level"
-                                                value={formData.level}
-                                                onChange={handleChange}
-                                                className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none text-sm transition-all bg-white font-medium"
-                                            >
-                                                {config.levelOptions.map(opt => (
-                                                    <option key={opt.value} value={opt.value}>
-                                                        {opt.label}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
+                                        {/* Dynamic Select Field (Level / Menu) */}
+                                        {config.hasLevelField && (
+                                            <div>
+                                                <label htmlFor="level" className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                                    {config.levelLabel}
+                                                </label>
+                                                <select
+                                                    id="level"
+                                                    name="level"
+                                                    value={formData.level}
+                                                    onChange={handleChange}
+                                                    className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none text-sm transition-all bg-white font-medium"
+                                                >
+                                                    {config.levelOptions.map(opt => (
+                                                        <option key={opt.value} value={opt.value}>
+                                                            {opt.label}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        )}
 
                                         {/* Dynamic Contact / Emergency Field */}
-                                        <div>
-                                            <label htmlFor="emergencyContact" className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
-                                                {config.emergencyLabel}
-                                            </label>
-                                            <input
-                                                type="text"
-                                                id="emergencyContact"
-                                                name="emergencyContact"
-                                                required={config.emergencyRequired}
-                                                value={formData.emergencyContact}
-                                                onChange={handleChange}
-                                                className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none text-sm transition-all"
-                                                placeholder={config.emergencyPlaceholder}
-                                            />
-                                        </div>
+                                        {config.hasEmergencyField && (
+                                            <div>
+                                                <label htmlFor="emergencyContact" className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                                    {config.emergencyLabel}
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    id="emergencyContact"
+                                                    name="emergencyContact"
+                                                    required={config.emergencyRequired}
+                                                    value={formData.emergencyContact}
+                                                    onChange={handleChange}
+                                                    className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none text-sm transition-all"
+                                                    placeholder={config.emergencyPlaceholder}
+                                                />
+                                            </div>
+                                        )}
 
                                         {/* Dynamic Comments / Allergies Field */}
-                                        <div>
-                                            <label htmlFor="comments" className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
-                                                {config.commentsLabel}
-                                            </label>
-                                            <textarea
-                                                id="comments"
-                                                name="comments"
-                                                rows={2}
-                                                value={formData.comments}
-                                                onChange={handleChange}
-                                                className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none text-sm transition-all resize-none"
-                                                placeholder={config.commentsPlaceholder}
-                                            />
-                                        </div>
+                                        {config.hasCommentsField && (
+                                            <div>
+                                                <label htmlFor="comments" className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                                    {config.commentsLabel}
+                                                </label>
+                                                <textarea
+                                                    id="comments"
+                                                    name="comments"
+                                                    rows={2}
+                                                    value={formData.comments}
+                                                    onChange={handleChange}
+                                                    className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none text-sm transition-all resize-none"
+                                                    placeholder={config.commentsPlaceholder}
+                                                />
+                                            </div>
+                                        )}
 
                                         {status === 'error' && (
                                             <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-xl text-xs flex items-center gap-2">
@@ -481,8 +504,8 @@ const EventModal = ({ isOpen, onClose, event }) => {
                                             type="submit"
                                             disabled={status === 'submitting'}
                                             className={`w-full py-4 mt-2 font-display font-bold uppercase tracking-widest text-white rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer ${status === 'submitting'
-                                                ? 'bg-stone-400 cursor-not-allowed'
-                                                : 'bg-gradient-to-r from-amber-500 to-alpine-600 hover:from-amber-600 hover:to-alpine-700 shadow-amber-900/20 hover:shadow-xl hover:-translate-y-0.5'
+                                                    ? 'bg-stone-400 cursor-not-allowed'
+                                                    : 'bg-gradient-to-r from-amber-500 to-alpine-600 hover:from-amber-600 hover:to-alpine-700 shadow-amber-900/20 hover:shadow-xl hover:-translate-y-0.5'
                                                 }`}
                                         >
                                             {status === 'submitting' ? (

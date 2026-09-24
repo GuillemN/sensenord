@@ -85,6 +85,11 @@ const EventList = () => {
                                                 ★ Esdeveniment Destacat
                                             </span>
                                         )}
+                                        {event.limitedSpots && (
+                                            <span className="px-2.5 py-0.5 bg-red-100 text-red-800 border border-red-200 rounded-md text-[11px] font-bold uppercase tracking-wider">
+                                                ⚠️ Places Limitades
+                                            </span>
+                                        )}
                                         <span className="text-xs font-semibold text-stone-400 uppercase tracking-widest">{event.subtitle}</span>
                                     </div>
 
@@ -92,17 +97,22 @@ const EventList = () => {
                                         {event.title}
                                     </h3>
 
-                                    <p className="text-sm text-stone-600 mb-4 line-clamp-2">
+                                    <p className="text-sm text-stone-600 mb-3 line-clamp-2">
                                         {event.description}
                                     </p>
 
-                                    <div className="flex flex-wrap gap-4 text-xs text-stone-500 font-mono">
+                                    <div className="flex flex-wrap items-center gap-3 text-xs text-stone-600 font-mono mb-1">
                                         <span className="flex items-center gap-1.5">
                                             <Calendar className="w-4 h-4 text-alpine-500" /> {event.time}
                                         </span>
                                         <span className="flex items-center gap-1.5">
                                             <MapPin className="w-4 h-4 text-alpine-500" /> {event.location}
                                         </span>
+                                        {event.price && (
+                                            <span className="font-bold text-amber-900 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                                                Preu: {event.price}
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
 
