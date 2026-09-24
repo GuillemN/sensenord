@@ -1,11 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Loader2, CheckCircle, AlertCircle, Mountain, Mail, Phone, User, ShieldCheck, Ticket, Download, Calendar, MapPin, Sparkles, Utensils, Wine, Trees } from 'lucide-react';
+import { X, Loader2, CheckCircle, AlertCircle, Mountain, Mail, Phone, User, ShieldCheck, Ticket, Download, Calendar, MapPin, Sparkles, Utensils, Wine, Trees, Footprints } from 'lucide-react';
 import { saveRegistrationToStorage, sendConfirmationEmail } from '../services/registrationService';
 
 const getEventConfig = (event) => {
     const id = event?.id || '';
     const title = (event?.title || '').toLowerCase();
+
+    if (id === 'social-run-2026' || title.includes('social run') || title.includes('brava')) {
+        return {
+            type: 'social_run',
+            IconComponent: Footprints,
+            infoTitle: `Informació de l'esdeveniment: ${event?.title || 'Social Run - B de Brava'}`,
+            infoDescription: event?.fullText || event?.description || "Edició especial B de Brava: 6 KM Social Run + Botifarra + Tast de Vins + DJ + Tardeo solidari.",
+            priceTag: "100% Solidari",
+            limitedSpots: false,
+            beneficiaryNotice: "Recuperació de les Gavarres i replantació d'arbres",
+            hasLevelField: true,
+            levelLabel: "Modalitat de participació *",
+            levelOptions: [
+                { value: 'Social Run 6KM + Tardeo', label: 'Social Run 6 km (10:00h) + Tardeo & Activitats' },
+                { value: 'Només Tardeo / Entrada General', label: 'Només Tardeo & Activitats (Sense córrer)' }
+            ],
+            defaultLevel: 'Social Run 6KM + Tardeo',
+            hasEmergencyField: false,
+            hasCommentsField: true,
+            commentsLabel: "Observacions (opcional)",
+            commentsPlaceholder: "Escriu si tens qualsevol observació o comentari...",
+            ticketLevelHeading: "Modalitat:",
+            footerNote: `Les dades s'utilitzaran exclusivament per a la gestió del Social Run - B de Brava.`
+        };
+    }
 
     if (id === 'botifarrada-2026' || title.includes('botifarrada')) {
         return {
@@ -135,7 +160,7 @@ const EventModal = ({ isOpen, onClose, event }) => {
         e.preventDefault();
         setStatus('submitting');
 
-        const prefix = config.type === 'botifarrada' ? 'BOT' : config.type === 'tast_vi' ? 'VIN' : config.type === 'visita_incendi' ? 'ADF' : 'VF';
+        const prefix = config.type === 'botifarrada' ? 'BOT' : config.type === 'tast_vi' ? 'VIN' : config.type === 'visita_incendi' ? 'ADF' : config.type === 'social_run' ? 'RUN' : 'VF';
         const ticketId = `SN-${prefix}2026-${Math.floor(10000 + Math.random() * 90000)}`;
         const now = new Date();
         const formattedDate = `${now.toLocaleDateString('ca-ES')} ${now.toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' })}`;
@@ -339,7 +364,7 @@ const EventModal = ({ isOpen, onClose, event }) => {
                                             <InfoIcon className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
                                             <div className="space-y-1.5">
                                                 <span className="font-bold block text-amber-950 text-sm">{config.infoTitle}</span>
-                                                <p className="text-stone-700">{config.infoDescription}</p>
+                                                <p className="text-stone-700 whitespace-pre-line">{config.infoDescription}</p>
                                                 <div className="flex flex-wrap items-center gap-2 pt-1">
                                                     <span className="px-2 py-0.5 bg-amber-200/70 text-amber-950 rounded font-bold text-[11px]">
                                                         💰 Preu: {config.priceTag}

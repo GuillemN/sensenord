@@ -107,6 +107,35 @@ export const deleteRegistrationFromStorage = async (id) => {
 export const generateEmailInstructionsText = (registration) => {
     const eventName = (registration.event || '').toLowerCase();
 
+    // 0. Social Run - B de Brava
+    if (eventName.includes('social run') || eventName.includes('brava')) {
+        return `Us heu inscrit al Social Run - B de Brava! 🏃‍♂️🍷🎶
+
+Moltes gràcies per sumar-vos a aquesta jornada tan especial al Port de Sant Feliu de Guíxols per les Gavarres!
+
+📌 DETALLS DE LA VOSTRA RESERVA:
+• Codi de Reserva: ${registration.id}
+• Esdeveniment: ${registration.event}
+• Data: Dissabte, 10 d'Octubre de 2026
+• Horari inici Run: 10:00h
+• Punt de trobada: Port de Sant Feliu de Guíxols
+• Modalitat: ${registration.level}
+• DNI / NIF: ${registration.dni}
+
+🏃‍♂️ PROGRAMA DE LA JORNADA:
+- 10:00 h: Sortida des del port per fer un Social Run de 6 km a ritme suau, obert a tothom.
+- En acabar: Botifarra per als participants, barra, tast de vins, música, DJs i tardeo solidari, amb diferents activitats durant el dia.
+
+🌱 TOT PER UNA BONA CAUSA:
+Tot el que recaptem es destinarà a donar suport a la recuperació de les Gavarres després dels incendis, contribuint a la replantació d’arbres i a la recuperació de les zones afectades.
+
+6 KM · BOTIFARRA · VINS · DJ · TARDEO · 100% SOLIDARI
+
+Corre. Brinda. Balla. Per les Gavarres! 🌿🤍
+
+Equip de Sense Nord Solidari`;
+    }
+
     // 1. Tast de vins amb Hericamps
     if (eventName.includes('tast') || eventName.includes('hericamps')) {
         return `Heu reservat el tast de vins amb Hericamps!

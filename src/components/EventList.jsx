@@ -131,11 +131,6 @@ const EventList = () => {
                                         {event.status === 'Obert' ? 'Inscriu-te ara' : 'Properament'}
                                         {event.status === 'Obert' && <ArrowRight className="w-4 h-4" />}
                                     </button>
-
-                                    <div className="flex items-center gap-1.5 text-xs font-semibold text-stone-600 bg-white border border-stone-200 px-3 py-1 rounded-full shadow-2xs">
-                                        <Users className="w-3.5 h-3.5 text-alpine-600" />
-                                        <span>{count} inscrits</span>
-                                    </div>
                                 </div>
                             </div>
                         );

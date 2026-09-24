@@ -74,9 +74,52 @@ export const BOTIFARRADA_EVENT = {
     requirements: 'Obert a tots els públics. Opcions vegetariana i sense gluten disponibles sota petició.'
 };
 
+export const SOCIAL_RUN_EVENT = {
+    id: 'social-run-2026',
+    title: 'Social Run - B de Brava',
+    subtitle: 'Port de Sant Feliu de Guíxols',
+    date: '10',
+    month: 'OCT',
+    year: '2026',
+    fullDate: 'Dissabte, 10 d\'Octubre de 2026',
+    time: '10:00h',
+    location: 'Port de Sant Feliu de Guíxols',
+    status: 'Obert',
+    price: '100% Solidari',
+    description: 'Edició especial B de Brava: Social Run de 6 km a ritme suau, botifarra, barra, tast de vins, DJs i tardeo per la recuperació de les Gavarres.',
+    badge: 'B de Brava 2026',
+    limitedSpots: false,
+    beneficiaryNotice: 'Tots els beneficis destinats a la recuperació i replantació de les Gavarres',
+    requirements: '6 KM · BOTIFARRA · VINS · DJ · TARDEO · 100% SOLIDARI. Corre. Brinda. Balla. Per les Gavarres.',
+    fullText: `El proper 10 d’octubre ens trobem al Port de Sant Feliu de Guíxols per una edició molt especial del B de Brava.
+
+A les 10:00 h sortirem des del port per fer un Social Run de 6 km a ritme suau, obert a tothom. Un recorregut per gaudir, córrer junts i posar-nos en moviment per una bona causa.
+
+I això només serà el principi.
+
+Quan acabem, començarà la part més social: botifarra per als participants, barra, tast de vins, música, DJs i tardeo, amb diferents activitats durant el dia. Un punt de trobada per quedar-nos, menjar, brindar, ballar i gaudir junts.
+
+A més, no cal córrer per formar part de l’esdeveniment. Les activitats de tarda estaran obertes a tothom i també hi haurà entrades disponibles per qui vulgui venir directament a gaudir de l’ambient.
+
+Tot el que recaptem es destinarà a donar suport a la recuperació de les Gavarres després dels incendis, contribuint a la replantació d’arbres i a la recuperació de les zones afectades.
+
+Una jornada per córrer, brindar i celebrar, però sobretot per posar el nostre granet de sorra.
+
+6 KM · BOTIFARRA · VINS · DJ · TARDEO · 100% SOLIDARI
+
+📍 Port de Sant Feliu de Guíxols
+📅 10 d’octubre
+⏰ 10:00 h
+
+Corre. Brinda. Balla.
+Per les Gavarres.`
+};
+
 export const INITIAL_EVENTS = [
+    SOCIAL_RUN_EVENT,
     VIA_FERRADA_EVENT,
     VISITA_INCENDI_EVENT,
     TAST_VI_EVENT,
     BOTIFARRADA_EVENT
 ];
+
