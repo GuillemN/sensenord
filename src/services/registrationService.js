@@ -106,60 +106,10 @@ export const deleteRegistrationFromStorage = async (id) => {
 
 export const generateEmailInstructionsText = (registration) => {
     const eventName = (registration.event || '').toLowerCase();
-    const name = registration.name || 'Participant';
 
-    if (eventName.includes('botifarrada')) {
-        return `Hola ${name}!
-
-Gràcies per reservar el teu tiquet per a la ${registration.event} organitzada per Sense Nord!
-
-📌 DETALLS DE LA TEVA RESERVA:
-• Codi de Reserva: ${registration.id}
-• Esdeveniment: ${registration.event}
-• Opció de Menú: ${registration.level}
-• DNI / NIF: ${registration.dni}
-• Telèfon: ${registration.phone}
-• Observacions / Al·lèrgies: ${registration.comments || 'Cap'}
-
-🎒 INFORMACIÓ IMPORTANT:
-1. Presenta aquest codi de reserva (${registration.id}) a la taula d'accés per recollir els tiquets de dinar i beguda.
-2. L'activitat comença a les 13:00h. Preguem arribar amb temps.
-3. Gaudirem de dinar de germanor, opció vegetariana, begudes i música en directe.
-
-Si tens qualsevol dubte, pots respondre directament a aquest correu.
-
-Ens veiem ben aviat a la taula!
-Equip de Sense Nord Solidari`;
-    }
-
-    if (eventName.includes('cata')) {
-        return `Hola ${name}!
-
-Gràcies per inscriure't a la ${registration.event} organitzada per Sense Nord!
-
-📌 DETALLS DE LA TEVA RESERVA:
-• Codi de Reserva: ${registration.id}
-• Esdeveniment: ${registration.event}
-• Modalitat de Tast: ${registration.level}
-• DNI / NIF: ${registration.dni}
-• Telèfon: ${registration.phone}
-• Observacions / Intoleràncies: ${registration.comments || 'Cap'}
-
-🎒 INFORMACIÓ IMPORTANT:
-1. Presenta aquest codi de reserva (${registration.id}) a la recepció del tast.
-2. L'activitat comença puntualment a les 18:00h.
-3. El tast inclou 5 vins de la DO Empordà i maridatge complet de productes de la terra.
-
-Si tens qualsevol dubte, pots respondre directament a aquest correu.
-
-Ens veiem ben aviat al tast!
-Equip de Sense Nord Solidari`;
-    }
-
-    if (eventName.includes('hericamps') || (eventName.includes('tast') && !eventName.includes('empordà'))) {
-        return `Hola ${name}!
-
-Heu reservat el tast de vins amb Hericamps!
+    // 1. Tast de vins amb Hericamps
+    if (eventName.includes('tast') || eventName.includes('hericamps')) {
+        return `Heu reservat el tast de vins amb Hericamps!
 
 Hericamps és un celler familiar, ecològic i de mínima intervenció de La Figuera, al Priorat. Treballen les seves pròpies vinyes, també a Celrà, i realitzen ells mateixos totes les feines durant l’any.
 
@@ -168,22 +118,14 @@ A través dels seus vins i olis artesanals contribueixen a mantenir vius el pobl
 Durant l’activitat tastareu 3 copes de vi, acompanyades d’explicacions sobre els vins, el procés d’elaboració i la feina que hi ha darrere de cada ampolla.
 
 Més que un tast de vins, serà també un espai de divulgació per conèixer de primera mà la feina dels pagesos, la realitat de la pagesia i la importància de mantenir viu el territori. 🌾
-
-📌 DETALLS DE LA RESERVA:
-• Codi de Reserva: ${registration.id}
-• Horari: 12:00
-• Preu: 8€
-• DNI / NIF: ${registration.dni}
-
-Ens veiem al tast!
-
-Equip de Sense Nord`;
+Horari: 12:00
+Preu: 8€
+Ens veiem al tast!`;
     }
 
+    // 2. Visita comentada a l'incendi de Gavarres
     if (eventName.includes('incendi') || eventName.includes('gavarres')) {
-        return `Hola ${name}!
-
-Us heu inscrit a la Visita comentada a l'incendi de les Gavarres! 🌲🔥🚶‍♂️
+        return `Us heu inscrit a la Visita comentada a l'incendi de les Gavarres! 🌲🔥🚶‍♂️
 
 Moltes gràcies per sumar-vos a aquesta activitat de conscienciació i divulgació organitzada conjuntament amb l'ADF Gavarres Marítima.
 
@@ -209,10 +151,32 @@ Moltes gràcies per la vostra implicació, per aportar el vostre granet de sorra
 Equip de Sense Nord & ADF Gavarres Marítima`;
     }
 
-    // Default: Via Ferrada Solidària
-    return `Hola ${name}!
+    // 3. Botifarrada Popular
+    if (eventName.includes('botifarrada')) {
+        return `Us heu inscrit a la Gran Botifarrada Popular! 🥩🥖
 
-Us heu apuntat a la Via Ferrada Solidària! 🧗‍♂️🌲
+Gràcies per reservar el teu tiquet per a la Gran Botifarrada Popular organitzada per Sense Nord!
+
+📌 DETALLS DE LA TEVA RESERVA:
+• Codi de Reserva: ${registration.id}
+• Esdeveniment: ${registration.event}
+• Opció de Menú: ${registration.level}
+• Preu: 10€ (Tots els beneficis aniran destinats a l'ADF Gavarres Marítima)
+• DNI / NIF: ${registration.dni}
+
+🎒 INFORMACIÓ IMPORTANT:
+1. Presenta aquest codi de reserva (${registration.id}) a la taula d'accés per recollir els tiquets de dinar i beguda.
+2. L'activitat comença a les 13:00h. Preguem arribar amb temps.
+3. Gaudirem de dinar de germanor, opció vegetariana, begudes i música en directe.
+
+Si tens qualsevol dubte, pots respondre directament a aquest correu.
+
+Ens veiem ben aviat a la taula!
+Equip de Sense Nord Solidari`;
+    }
+
+    // 4. Via Ferrada Solidària (Default)
+    return `Us heu apuntat a la Via Ferrada Solidària! 🧗‍♂️🌲
 
 Recordeu que es tracta d’una activitat física. Si no heu fet mai una via ferrada o teniu alguna dificultat física, és important que ho comuniqueu en el moment de fer la inscripció.
 
@@ -220,19 +184,9 @@ Recordeu que es tracta d’una activitat física. Si no heu fet mai una via ferr
 
 Recordeu que és una activitat sense ànim de lucre i de taquilla inversa: cadascú aporta el que vulgui, el que cregui i el que pugui. Tot el que es recapti anirà destinat a l’ADF Gavarres Marítima, per contribuir a la recuperació, repoblació i cura dels nostres boscos després dels incendis.
 
-📌 DETALLS DE LA TEVA RESERVA:
-• Codi de Reserva: ${registration.id}
-• Data: Dissabte, 10 d'Octubre de 2026 (09:00h)
-• Ubicació: Cala del Molí / Sant Feliu de Guíxols
-• Nivell registrat: ${registration.level}
-• DNI / NIF: ${registration.dni}
-• Contacte d'emergència: ${registration.emergencyContact}
-
 Per a qualsevol dubte, podeu respondre aquest correu o contactar directament amb @aventuraexperiencesfg per Instagram.
 
-Moltes gràcies per participar, aportar el vostre granet de sorra i cuidar les Gavarres! 🤍🌲
-
-Equip de Sense Nord Solidari`;
+Moltes gràcies per participar, aportar el vostre granet de sorra i cuidar les Gavarres! 🤍🌲`;
 };
 
 export const sendConfirmationEmail = async (registration) => {
@@ -252,8 +206,8 @@ export const sendConfirmationEmail = async (registration) => {
                 to_email: registration.email,
                 event_name: registration.event,
                 ticket_code: registration.id,
-                date: '10 d\'Octubre de 2026 (09:00h)',
-                location: 'Cala del Molí / Sant Feliu de Guíxols',
+                date: registration.event,
+                location: 'Sense Nord',
                 phone: registration.phone,
                 level: registration.level,
                 instructions: instructions
@@ -274,7 +228,7 @@ export const sendConfirmationEmail = async (registration) => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     access_key: web3formsKey,
-                    subject: `Confirmació d'Inscripció i Instruccions: ${registration.event} (${registration.id})`,
+                    subject: `Confirmació d'Inscripció: ${registration.event} (${registration.id})`,
                     from_name: 'Sense Nord Solidari',
                     to_email: registration.email,
                     name: registration.name,
@@ -297,7 +251,10 @@ export const sendConfirmationEmail = async (registration) => {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'text/plain' },
-                body: JSON.stringify(registration)
+                body: JSON.stringify({
+                    ...registration,
+                    instructions
+                })
             });
             return { success: true, mode: 'google_script', message: `Inscripció registrada i notificació enviada` };
         } catch (err) {
@@ -315,7 +272,7 @@ export const sendConfirmationEmail = async (registration) => {
 export const exportToCSV = (dataList) => {
     if (!Array.isArray(dataList) || dataList.length === 0) return;
 
-    const headers = ['Codi Inscripció', 'Data/Hora', 'Esdeveniment', 'Nom i Cognoms', 'Email', 'Telèfon', 'DNI/NIF', 'Nivell', 'Contacte Emergència', 'Comentaris'];
+    const headers = ['Codi Inscripció', 'Data/Hora', 'Esdeveniment', 'Nom i Cognoms', 'Email', 'Telèfon', 'DNI/NIF', 'Nivell/Opció', 'Contacte Emergència', 'Comentaris'];
 
     const csvRows = [];
     csvRows.push(headers.join(';'));
@@ -342,7 +299,7 @@ export const exportToCSV = (dataList) => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', `Inscripcions_ViaFerrada_SenseNord_${new Date().toISOString().slice(0,10)}.csv`);
+    link.setAttribute('download', `Inscripcions_SenseNord_${new Date().toISOString().slice(0,10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
