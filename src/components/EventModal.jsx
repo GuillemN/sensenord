@@ -13,7 +13,8 @@ const getEventConfig = (event) => {
             IconComponent: Utensils,
             infoTitle: `Informació de la ${event?.title || 'Botifarrada Popular'}`,
             infoDescription: event?.description || "Dinar festiu de germanor amb opció vegetariana/vegana i begudes incloses.",
-            priceTag: "10€",
+            priceTag: "10€ (Preu individual)",
+            comboTag: "🍷+🥩 Pack Tast + Botifarrada: 15€",
             limitedSpots: false,
             beneficiaryNotice: "Tots els beneficis aniran destinats a l'ADF Gavarres Marítima",
             hasLevelField: true,
@@ -36,7 +37,8 @@ const getEventConfig = (event) => {
             IconComponent: Wine,
             infoTitle: `Informació de l'esdeveniment: ${event?.title || 'Tast de vins amb Hericamps'}`,
             infoDescription: event?.description || "Tast de 3 copes de vi ecològic i d'oli artesanal amb el celler Hericamps.",
-            priceTag: "8€",
+            priceTag: "8€ (Preu individual)",
+            comboTag: "🍷+🥩 Pack Tast + Botifarrada: 15€",
             limitedSpots: true,
             beneficiaryNotice: "Tots els beneficis aniran destinats a l'ADF Gavarres Marítima",
             hasLevelField: false,
@@ -72,7 +74,7 @@ const getEventConfig = (event) => {
         IconComponent: Mountain,
         infoTitle: `Informació de la ${event?.title || 'Via Ferrada Solidària'}`,
         infoDescription: event?.description || "Jornada d'escalada i via ferrada solidària. Material tècnic i assegurança inclosos.",
-        priceTag: "Preu voluntari (Taquilla inversa)",
+        priceTag: "Aportació voluntària",
         limitedSpots: true,
         beneficiaryNotice: "Tots els beneficis aniran destinats a l'ADF Gavarres Marítima",
         hasLevelField: true,
@@ -342,6 +344,11 @@ const EventModal = ({ isOpen, onClose, event }) => {
                                                     <span className="px-2 py-0.5 bg-amber-200/70 text-amber-950 rounded font-bold text-[11px]">
                                                         💰 Preu: {config.priceTag}
                                                     </span>
+                                                    {config.comboTag && (
+                                                        <span className="px-2 py-0.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded font-bold text-[11px] shadow-xs">
+                                                            {config.comboTag}
+                                                        </span>
+                                                    )}
                                                     {config.limitedSpots && (
                                                         <span className="px-2 py-0.5 bg-red-100 text-red-800 border border-red-200 rounded font-bold text-[11px]">
                                                             ⚠️ Places Limitades

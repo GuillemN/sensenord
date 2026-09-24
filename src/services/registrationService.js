@@ -118,7 +118,7 @@ A través dels seus vins i olis artesanals contribueixen a mantenir vius el pobl
 Durant l’activitat tastareu 3 copes de vi, acompanyades d’explicacions sobre els vins, el procés d’elaboració i la feina que hi ha darrere de cada ampolla.
 
 Més que un tast de vins, serà també un espai de divulgació per conèixer de primera mà la feina dels pagesos, la realitat de la pagesia i la importància de mantenir viu el territori. 🌾
-Horari: 12:00
+Horari: 12:00h - 13:00h
 Preu: 8€
 Ens veiem al tast!`;
     }
@@ -131,7 +131,7 @@ Moltes gràcies per sumar-vos a aquesta activitat de conscienciació i divulgaci
 
 📌 DETALLS DE LA VOSTRA RESERVA:
 • Codi de Reserva: ${registration.id}
-• Horari: De 9:00h a 12:00h
+• Horari: De 9:00h a 12:00h (Dissabte 10 d'Octubre)
 • Punt de trobada: Aparcament de Romanyà de la Selva
 • Recorregut: Anirem a la zona de l'incendi a tocar de la urbanització Vall Repòs i Mas Artigues.
 • DNI / NIF: ${registration.dni}
@@ -160,13 +160,15 @@ Gràcies per reservar el teu tiquet per a la Gran Botifarrada Popular organitzad
 📌 DETALLS DE LA TEVA RESERVA:
 • Codi de Reserva: ${registration.id}
 • Esdeveniment: ${registration.event}
+• Data: Dissabte, 10 d'Octubre de 2026
+• Horari: 13:30h - 15:00h
 • Opció de Menú: ${registration.level}
 • Preu: 10€ (Tots els beneficis aniran destinats a l'ADF Gavarres Marítima)
 • DNI / NIF: ${registration.dni}
 
 🎒 INFORMACIÓ IMPORTANT:
 1. Presenta aquest codi de reserva (${registration.id}) a la taula d'accés per recollir els tiquets de dinar i beguda.
-2. L'activitat comença a les 13:00h. Preguem arribar amb temps.
+2. L'activitat comença a les 13:30h. Preguem arribar amb temps.
 3. Gaudirem de dinar de germanor, opció vegetariana, begudes i música en directe.
 
 Si tens qualsevol dubte, pots respondre directament a aquest correu.
@@ -182,7 +184,7 @@ Recordeu que es tracta d’una activitat física. Si no heu fet mai una via ferr
 
 ⚠️ Les places són limitades. Si finalment no podeu venir, us agrairem molt que ens aviseu com més aviat millor, perquè una altra persona pugui aprofitar la vostra plaça i participar en aquesta iniciativa solidària.
 
-Recordeu que és una activitat sense ànim de lucre i de taquilla inversa: cadascú aporta el que vulgui, el que cregui i el que pugui. Tot el que es recapti anirà destinat a l’ADF Gavarres Marítima, per contribuir a la recuperació, repoblació i cura dels nostres boscos després dels incendis.
+Recordeu que és una activitat sense ànim de lucre i d’aportació voluntària: cadascú aporta el que vulgui, el que cregui i el que pugui. Tot el que es recapti anirà destinat a l’ADF Gavarres Marítima, per contribuir a la recuperació, repoblació i cura dels nostres boscos després dels incendis.
 
 Per a qualsevol dubte, podeu respondre aquest correu o contactar directament amb @aventuraexperiencesfg per Instagram.
 
