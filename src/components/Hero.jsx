@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown, Mountain, Sparkles } from 'lucide-react';
-import EventModal from './EventModal';
-import { VIA_FERRADA_EVENT } from '../data/eventsData';
+import { ArrowDown, Calendar, Sparkles } from 'lucide-react';
 
 const Hero = () => {
     const { scrollY } = useScroll();
     const y = useTransform(scrollY, [0, 1000], [0, 400]);
     const opacity = useTransform(scrollY, [0, 500], [1, 0]);
 
-    const [isViaFerradaModalOpen, setIsViaFerradaModalOpen] = useState(false);
+    const scrollToEvents = (e) => {
+        e.preventDefault();
+        const element = document.getElementById('events');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     const scrollToProjects = (e) => {
         e.preventDefault();
@@ -59,36 +63,27 @@ const Hero = () => {
                         />
                     </div>
                     
-                    <p className="font-sans text-xl md:text-2xl font-light text-slate-100 max-w-2xl mx-auto leading-relaxed opacity-100 mb-8 drop-shadow-lg">
+                    <p className="font-sans text-xl md:text-2xl font-light text-slate-100 max-w-2xl mx-auto leading-relaxed opacity-100 mb-10 drop-shadow-lg">
                         Escalada, alpinisme i solidaritat. <br className="hidden md:block" />
                         Fent camí cap a un món més elevat.
                     </p>
 
-                    {/* Primary Highlighted Call-To-Action Button */}
-                    <div className="mb-8 flex justify-center">
-                        <button
-                            onClick={() => setIsViaFerradaModalOpen(true)}
-                            className="group relative inline-flex items-center justify-center px-8 py-4 md:px-10 md:py-5 text-base md:text-lg font-display font-bold uppercase tracking-wider text-white bg-gradient-to-r from-amber-500 via-amber-600 to-alpine-600 hover:from-amber-600 hover:to-alpine-700 rounded-2xl shadow-2xl shadow-amber-500/30 border border-amber-300/40 transition-all duration-300 hover:scale-105 hover:shadow-amber-500/50 cursor-pointer"
-                        >
-                            <Mountain className="w-6 h-6 mr-3 text-amber-200 group-hover:rotate-12 transition-transform duration-300" />
-                            <span>Inscriu-te a la Via Ferrada Solidària!</span>
-                        </button>
-                    </div>
-
-                    {/* Secondary Navigation Buttons */}
+                    {/* Navigation Buttons */}
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <a
+                            href="#events"
+                            onClick={scrollToEvents}
+                            className="group relative w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-display font-bold uppercase tracking-wider text-white bg-gradient-to-r from-amber-500 via-amber-600 to-alpine-600 hover:from-amber-600 hover:to-alpine-700 rounded-2xl shadow-xl shadow-amber-500/20 border border-amber-300/40 transition-all duration-300 hover:scale-105"
+                        >
+                            <Calendar className="w-5 h-5 mr-2.5 text-amber-200 group-hover:scale-110 transition-transform duration-300" />
+                            <span>Veure Esdeveniments</span>
+                        </a>
                         <a
                             href="#projects"
                             onClick={scrollToProjects}
-                            className="w-full sm:w-auto px-6 py-3.5 bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white hover:text-alpine-950 text-white font-display font-bold text-sm uppercase tracking-widest transition-all duration-300 rounded-xl"
+                            className="w-full sm:w-auto px-7 py-4 bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white hover:text-alpine-950 text-white font-display font-bold text-base uppercase tracking-wider transition-all duration-300 rounded-2xl"
                         >
                             Veure Projectes
-                        </a>
-                        <a
-                            href="#events"
-                            className="w-full sm:w-auto px-6 py-3.5 bg-alpine-900/80 hover:bg-alpine-800 text-white font-display font-bold text-sm uppercase tracking-widest transition-all duration-300 border border-alpine-600/50 rounded-xl"
-                        >
-                            Agenda 2026
                         </a>
                     </div>
                 </motion.div>
@@ -96,8 +91,8 @@ const Hero = () => {
 
             {/* Scroll indicator */}
             <motion.a
-                href="#projects"
-                onClick={scrollToProjects}
+                href="#events"
+                onClick={scrollToEvents}
                 className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/70 cursor-pointer hover:text-white transition-colors z-20"
                 animate={{ y: [0, 8, 0] }}
                 transition={{ repeat: Infinity, duration: 2 }}
@@ -105,13 +100,6 @@ const Hero = () => {
             >
                 <ArrowDown className="w-8 h-8 drop-shadow-md" strokeWidth={1.5} />
             </motion.a>
-
-            {/* Event Registration Modal */}
-            <EventModal
-                isOpen={isViaFerradaModalOpen}
-                onClose={() => setIsViaFerradaModalOpen(false)}
-                event={VIA_FERRADA_EVENT}
-            />
         </section>
     );
 };

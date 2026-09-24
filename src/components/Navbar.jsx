@@ -86,12 +86,15 @@ const Navbar = () => {
               </Link>
             )
           ))}
-          <Link
-            to="/shop"
-            className="text-xs font-bold uppercase tracking-widest text-alpine-600 border border-alpine-600 px-4 py-2 rounded hover:bg-alpine-600 hover:text-white transition-all"
+          <button
+            disabled
+            className={`text-xs font-bold uppercase tracking-widest px-4 py-2 rounded opacity-50 cursor-not-allowed select-none pointer-events-none border ${
+              scrolled ? 'text-slate-400 border-slate-300' : 'text-slate-400 border-white/30'
+            }`}
+            title="Botiga temporalment no disponible"
           >
             Botiga
-          </Link>
+          </button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -123,13 +126,11 @@ const Navbar = () => {
                   {link.name}
                 </a>
               ))}
-              <Link
-                to="/shop"
-                className="text-4xl font-display font-bold uppercase text-alpine-600 hover:text-alpine-800 transition-colors mt-4"
-                onClick={() => setIsOpen(false)}
+              <span
+                className="text-4xl font-display font-bold uppercase text-slate-400 opacity-50 cursor-not-allowed select-none mt-4"
               >
                 Botiga
-              </Link>
+              </span>
             </div>
           </motion.div>
         )}
