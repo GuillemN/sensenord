@@ -66,27 +66,12 @@ export const BOTIFARRADA_EVENT = {
     requirements: 'Obert a tots els públics. Opcions veganes i sense gluten disponibles sota petició al formulari.'
 };
 
-export const CATA_VINS_EVENT = {
-    id: 'cata-vins-2026',
-    title: 'Cata de Vins Solidària',
-    subtitle: 'Tast de vins DO Empordà & Maridatge',
-    date: '24',
-    month: 'OCT',
-    year: '2026',
-    fullDate: 'Dissabte, 24 d\'Octubre de 2026',
-    time: '18:00h - 21:00h',
-    location: 'Espai Social Sense Nord',
-    status: 'Obert',
-    price: 'Aportació solidària (Inclou tast de 5 vins i maridatge)',
-    description: 'Cata guiada de vins locals d\'alta qualitat amb maridatge de formatges i productes de la terra. Una vetllada festiva i enològica per recaptar fons pels nostres projectes.',
-    badge: 'Enologia & Solidaritat',
-    requirements: 'Apte per a majors de 18 anys. Places limitades amb reserva de taula.'
-};
+
 
 export const INITIAL_EVENTS = [
     VIA_FERRADA_EVENT,
     TAST_VI_EVENT,
     VISITA_INCENDI_EVENT,
-    BOTIFARRADA_EVENT,
-    CATA_VINS_EVENT
+    BOTIFARRADA_EVENT
+
 ];
