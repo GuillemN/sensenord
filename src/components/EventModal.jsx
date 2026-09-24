@@ -52,28 +52,7 @@ const getEventConfig = (event) => {
         };
     }
 
-    if (id === 'cata-vins-2026' || title.includes('vins')) {
-        return {
-            type: 'cata_vins',
-            IconComponent: Wine,
-            infoTitle: `Informació del ${event?.title || 'Tast de Vins Solidari'}`,
-            infoDescription: event?.description || "Cata guiada de 5 vins DO Empordà amb maridatge de formatges i embotits locals.",
-            levelLabel: "Preferències de Tast *",
-            levelOptions: [
-                { value: 'Tast Complet (5 Vins + Maridatge)', label: 'Tast Complet (5 Vins + Maridatge)' },
-                { value: 'Maridatge Sense Alcohol', label: 'Maridatge Sense Alcohol (Mosts / Begudes naturals)' },
-                { value: 'Aficionat / Sommelier', label: 'Nivell Avançat / Aficionat al vi' }
-            ],
-            defaultLevel: 'Tast Complet (5 Vins + Maridatge)',
-            emergencyLabel: "Reserva de Taula / Acompanyants (Opcional)",
-            emergencyRequired: false,
-            emergencyPlaceholder: "Ex: Venc en grup amb la família Soler (4 persones)",
-            commentsLabel: "Intoleràncies o Preferències Alimentàries (Opcional)",
-            commentsPlaceholder: "Escriu si tens intoleràncies (glutens, lactosa...) o necessitats especials...",
-            ticketLevelHeading: "Modalitat de Tast:",
-            footerNote: `Les dades s'utilitzaran exclusivament per a la reserva de la ${event?.title || 'Cata de Vins Solidària'}.`
-        };
-    }
+
 
     if (id === 'visita-incendi-2026' || title.includes('incendi') || title.includes('gavarres')) {
         return {
@@ -502,8 +481,8 @@ const EventModal = ({ isOpen, onClose, event }) => {
                                             type="submit"
                                             disabled={status === 'submitting'}
                                             className={`w-full py-4 mt-2 font-display font-bold uppercase tracking-widest text-white rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer ${status === 'submitting'
-                                                    ? 'bg-stone-400 cursor-not-allowed'
-                                                    : 'bg-gradient-to-r from-amber-500 to-alpine-600 hover:from-amber-600 hover:to-alpine-700 shadow-amber-900/20 hover:shadow-xl hover:-translate-y-0.5'
+                                                ? 'bg-stone-400 cursor-not-allowed'
+                                                : 'bg-gradient-to-r from-amber-500 to-alpine-600 hover:from-amber-600 hover:to-alpine-700 shadow-amber-900/20 hover:shadow-xl hover:-translate-y-0.5'
                                                 }`}
                                         >
                                             {status === 'submitting' ? (
