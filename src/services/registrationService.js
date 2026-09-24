@@ -105,18 +105,17 @@ export const deleteRegistrationFromStorage = async (id) => {
 };
 
 export const generateEmailInstructionsText = (registration) => {
-    const evTitle = registration.event || 'Esdeveniment Solidari';
-    const isBotifarrada = evTitle.toLowerCase().includes('botifarrada');
-    const isCataVins = evTitle.toLowerCase().includes('vins') || evTitle.toLowerCase().includes('tast');
+    const eventName = (registration.event || '').toLowerCase();
+    const name = registration.name || 'Participant';
 
-    if (isBotifarrada) {
-        return `Hola ${registration.name}!
+    if (eventName.includes('botifarrada')) {
+        return `Hola ${name}!
 
-Gràcies per reservar el teu tiquet per a la ${evTitle} organitzada per Sense Nord!
+Gràcies per reservar el teu tiquet per a la ${registration.event} organitzada per Sense Nord!
 
 📌 DETALLS DE LA TEVA RESERVA:
 • Codi de Reserva: ${registration.id}
-• Esdeveniment: ${evTitle}
+• Esdeveniment: ${registration.event}
 • Opció de Menú: ${registration.level}
 • DNI / NIF: ${registration.dni}
 • Telèfon: ${registration.phone}
@@ -133,14 +132,14 @@ Ens veiem ben aviat a la taula!
 Equip de Sense Nord Solidari`;
     }
 
-    if (isCataVins) {
-        return `Hola ${registration.name}!
+    if (eventName.includes('cata')) {
+        return `Hola ${name}!
 
-Gràcies per inscriure't a la ${evTitle} organitzada per Sense Nord!
+Gràcies per inscriure't a la ${registration.event} organitzada per Sense Nord!
 
 📌 DETALLS DE LA TEVA RESERVA:
 • Codi de Reserva: ${registration.id}
-• Esdeveniment: ${evTitle}
+• Esdeveniment: ${registration.event}
 • Modalitat de Tast: ${registration.level}
 • DNI / NIF: ${registration.dni}
 • Telèfon: ${registration.phone}
@@ -157,26 +156,82 @@ Ens veiem ben aviat al tast!
 Equip de Sense Nord Solidari`;
     }
 
-    return `Hola ${registration.name}!
+    if (eventName.includes('hericamps') || (eventName.includes('tast') && !eventName.includes('empordà'))) {
+        return `Hola ${name}!
 
-Gràcies per inscriure't a la ${evTitle} organitzada per Sense Nord!
+Heu reservat el tast de vins amb Hericamps!
+
+Hericamps és un celler familiar, ecològic i de mínima intervenció de La Figuera, al Priorat. Treballen les seves pròpies vinyes, també a Celrà, i realitzen ells mateixos totes les feines durant l’any.
+
+A través dels seus vins i olis artesanals contribueixen a mantenir vius el poble, la comarca, la pagesia i l’entorn natural. 🌱🍇
+
+Durant l’activitat tastareu 3 copes de vi, acompanyades d’explicacions sobre els vins, el procés d’elaboració i la feina que hi ha darrere de cada ampolla.
+
+Més que un tast de vins, serà també un espai de divulgació per conèixer de primera mà la feina dels pagesos, la realitat de la pagesia i la importància de mantenir viu el territori. 🌾
+
+📌 DETALLS DE LA RESERVA:
+• Codi de Reserva: ${registration.id}
+• Horari: 12:00
+• Preu: 8€
+• DNI / NIF: ${registration.dni}
+
+Ens veiem al tast!
+
+Equip de Sense Nord`;
+    }
+
+    if (eventName.includes('incendi') || eventName.includes('gavarres')) {
+        return `Hola ${name}!
+
+Us heu inscrit a la Visita comentada a l'incendi de les Gavarres! 🌲🔥🚶‍♂️
+
+Moltes gràcies per sumar-vos a aquesta activitat de conscienciació i divulgació organitzada conjuntament amb l'ADF Gavarres Marítima.
+
+📌 DETALLS DE LA VOSTRA RESERVA:
+• Codi de Reserva: ${registration.id}
+• Horari: De 9:00h a 12:00h
+• Punt de trobada: Aparcament de Romanyà de la Selva
+• Recorregut: Anirem a la zona de l'incendi a tocar de la urbanització Vall Repòs i Mas Artigues.
+• DNI / NIF: ${registration.dni}
+
+A través d'aquesta visita parlarem de l'incendi, el seu impacte, les tasques de recuperació del bosc i les mesures clau de prevenció d'incendis forestals.
+
+🎒 RECORDATORI IMPORTANT:
+• Portar calçat adequat per caminar per muntanya/bosc.
+• Portar aigua i protecció solar.
+
+⚠️ Les places són limitades. Si finalment no podeu venir, us agrairem molt que ens aviseu com més aviat millor, perquè una altra persona pugui aprofitar la vostra plaça i participar en aquesta iniciativa solidària.
+
+Per a qualsevol dubte o consulta, podeu respondre directament a aquest correu.
+
+Moltes gràcies per la vostra implicació, per aportar el vostre granet de sorra i cuidar les Gavarres! 🌿🤍
+
+Equip de Sense Nord & ADF Gavarres Marítima`;
+    }
+
+    // Default: Via Ferrada Solidària
+    return `Hola ${name}!
+
+Us heu apuntat a la Via Ferrada Solidària! 🧗‍♂️🌲
+
+Recordeu que es tracta d’una activitat física. Si no heu fet mai una via ferrada o teniu alguna dificultat física, és important que ho comuniqueu en el moment de fer la inscripció.
+
+⚠️ Les places són limitades. Si finalment no podeu venir, us agrairem molt que ens aviseu com més aviat millor, perquè una altra persona pugui aprofitar la vostra plaça i participar en aquesta iniciativa solidària.
+
+Recordeu que és una activitat sense ànim de lucre i de taquilla inversa: cadascú aporta el que vulgui, el que cregui i el que pugui. Tot el que es recapti anirà destinat a l’ADF Gavarres Marítima, per contribuir a la recuperació, repoblació i cura dels nostres boscos després dels incendis.
 
 📌 DETALLS DE LA TEVA RESERVA:
 • Codi de Reserva: ${registration.id}
-• Esdeveniment: ${evTitle}
+• Data: Dissabte, 10 d'Octubre de 2026 (09:00h)
+• Ubicació: Cala del Molí / Sant Feliu de Guíxols
 • Nivell registrat: ${registration.level}
 • DNI / NIF: ${registration.dni}
 • Contacte d'emergència: ${registration.emergencyContact}
 
-🎒 INSTRUCCIONS I QUÈ HAS DE PORTAR:
-1. Calçat: Sabatilles d'esport amb bona sola de goma o botes de muntanya/aproximació.
-2. Roba: Roba còmoda de muntanya/esport transpirable adaptada a la intempèrie.
-3. Hidratació i Nutrició: Mínim 1,5 Litres d'aigua per persona i petits snacks (barretes, fruita seca).
-4. Material Tècnic: Casc, arnés i disipador oficials inclosos.
+Per a qualsevol dubte, podeu respondre aquest correu o contactar directament amb @aventuraexperiencesfg per Instagram.
 
-Si tens qualsevol dubte, pots respondre directament a aquest correu.
+Moltes gràcies per participar, aportar el vostre granet de sorra i cuidar les Gavarres! 🤍🌲
 
-Ens veiem ben aviat a la roca!
 Equip de Sense Nord Solidari`;
 };
 

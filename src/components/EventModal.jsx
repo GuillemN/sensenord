@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Loader2, CheckCircle, AlertCircle, Mountain, Mail, Phone, User, ShieldCheck, Ticket, Download, Calendar, MapPin, Sparkles, Utensils, Wine } from 'lucide-react';
+import { X, Loader2, CheckCircle, AlertCircle, Mountain, Mail, Phone, User, ShieldCheck, Ticket, Download, Calendar, MapPin, Sparkles, Utensils, Wine, Trees } from 'lucide-react';
 import { saveRegistrationToStorage, sendConfirmationEmail } from '../services/registrationService';
 
 const getEventConfig = (event) => {
@@ -30,7 +30,29 @@ const getEventConfig = (event) => {
         };
     }
 
-    if (id === 'cata-vins-2026' || title.includes('vins') || title.includes('tast')) {
+    if (id === 'tast-vi-2026' || title.includes('hericamps')) {
+        return {
+            type: 'tast_vi',
+            IconComponent: Wine,
+            infoTitle: `Informació de l'esdeveniment: ${event?.title || 'Tast de vins amb Hericamps'}`,
+            infoDescription: event?.description || "Tast de 3 copes de vi ecològic i d'oli artesanal amb el celler Hericamps.",
+            levelLabel: "Preferències de Tast *",
+            levelOptions: [
+                { value: 'Tast 3 copes de vi Hericamps', label: 'Tast de 3 copes de vi ecològic i explicacions' },
+                { value: 'Opcions sense alcohol / Most', label: 'Opció Tast Sense Alcohol / Most' }
+            ],
+            defaultLevel: 'Tast 3 copes de vi Hericamps',
+            emergencyLabel: "Acompanyants o Reserva (Opcional)",
+            emergencyRequired: false,
+            emergencyPlaceholder: "Ex: Venc en parella / Grup de 3 persones",
+            commentsLabel: "Observacions o Al·lèrgies (Opcional)",
+            commentsPlaceholder: "Escriu si tens al·lèrgies o consultes pel celler...",
+            ticketLevelHeading: "Modalitat de Tast:",
+            footerNote: `Les dades s'utilitzaran exclusivament per a la gestió del ${event?.title || 'Tast de vins'}.`
+        };
+    }
+
+    if (id === 'cata-vins-2026' || title.includes('vins')) {
         return {
             type: 'cata_vins',
             IconComponent: Wine,
@@ -50,6 +72,27 @@ const getEventConfig = (event) => {
             commentsPlaceholder: "Escriu si tens intoleràncies (glutens, lactosa...) o necessitats especials...",
             ticketLevelHeading: "Modalitat de Tast:",
             footerNote: `Les dades s'utilitzaran exclusivament per a la reserva de la ${event?.title || 'Cata de Vins Solidària'}.`
+        };
+    }
+
+    if (id === 'visita-incendi-2026' || title.includes('incendi') || title.includes('gavarres')) {
+        return {
+            type: 'visita_incendi',
+            IconComponent: Trees,
+            infoTitle: `Informació de la ${event?.title || 'Visita comentada a l\'incendi de Gavarres'}`,
+            infoDescription: event?.description || "Visita comentada amb l'ADF Gavarres Marítima per conèixer l'impacte de l'incendi i la prevenció.",
+            levelLabel: "Assistència *",
+            levelOptions: [
+                { value: 'General / Tots els públics', label: 'General / Assistència lliure' }
+            ],
+            defaultLevel: 'General / Tots els públics',
+            emergencyLabel: "Contacte d'Emergència o Acompanyants (Opcional)",
+            emergencyRequired: false,
+            emergencyPlaceholder: "Ex: Telèfon d'emergència o acompanyants...",
+            commentsLabel: "Observacions (Opcional)",
+            commentsPlaceholder: "Escriu qualsevol dubte o observació per a l'ADF Gavarres Marítima...",
+            ticketLevelHeading: "Tipus d'assistència:",
+            footerNote: `Les dades s'utilitzaran exclusivament per a l'organització de la Visita a l'Incendi de Gavarres.`
         };
     }
 
@@ -114,7 +157,7 @@ const EventModal = ({ isOpen, onClose, event }) => {
         e.preventDefault();
         setStatus('submitting');
 
-        const prefix = config.type === 'botifarrada' ? 'BOT' : config.type === 'cata_vins' ? 'VIN' : 'VF';
+        const prefix = config.type === 'botifarrada' ? 'BOT' : config.type === 'cata_vins' || config.type === 'tast_vi' ? 'VIN' : config.type === 'visita_incendi' ? 'ADF' : 'VF';
         const ticketId = `SN-${prefix}2026-${Math.floor(10000 + Math.random() * 90000)}`;
         const now = new Date();
         const formattedDate = `${now.toLocaleDateString('ca-ES')} ${now.toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' })}`;
@@ -228,7 +271,7 @@ const EventModal = ({ isOpen, onClose, event }) => {
                                             <div>
                                                 <h4 className="font-bold text-lg text-emerald-950">Inscripció Confirmada amb Èxit!</h4>
                                                 <p className="text-sm text-emerald-800 mt-0.5">
-                                                    Gràcies, <strong>{confirmedTicket.name}</strong>! T'hem reservat la plaça per a {confirmedTicket.event}.
+                                                    Gràcies, <strong>{confirmedTicket.name}</strong>! T'hem reservat la plaça per a <strong>{confirmedTicket.event}</strong>.
                                                 </p>
                                                 <div className="mt-2 inline-flex items-center gap-2 text-xs font-semibold bg-emerald-100 text-emerald-900 px-3 py-1 rounded-lg">
                                                     <Mail className="w-3.5 h-3.5 text-emerald-700" />
