@@ -209,6 +209,11 @@ Equip de Sense Nord Solidari`;
     // 4. Via Ferrada Solidària (Default)
     return `Us heu apuntat a la Via Ferrada Solidària! 🧗‍♂️🌲
 
+📌 HORARIS I TORN DE SORTIDA:
+• Sortides durant tot el dia, de 8:00 a 18:00 h.
+• ⏱️ L'activitat té una durada aproximada de 2-3 hores.
+• Opció / Torn indicat: ${registration.level || registration.turn || 'Assignat a la inscripció'}
+
 Recordeu que es tracta d’una activitat física. Si no heu fet mai una via ferrada o teniu alguna dificultat física, és important que ho comuniqueu en el moment de fer la inscripció.
 
 ⚠️ Les places són limitades. Si finalment no podeu venir, us agrairem molt que ens aviseu com més aviat millor, perquè una altra persona pugui aprofitar la vostra plaça i participar en aquesta iniciativa solidària.

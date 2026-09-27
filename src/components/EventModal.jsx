@@ -98,10 +98,19 @@ const getEventConfig = (event) => {
         type: 'via_ferrada',
         IconComponent: Mountain,
         infoTitle: `Informació de la ${event?.title || 'Via Ferrada Solidària'}`,
-        infoDescription: event?.description || "Jornada d'escalada i via ferrada solidària. Material tècnic i assegurança inclosos.",
+        infoDescription: event?.description || `Sortides durant tot el dia, de 8:00 a 18:00 h.\n\n⏱️ L’activitat té una durada aproximada de 2-3 hores i s’organitzaran diferents torns de sortida al llarg del dia.\n\nEn el moment de la inscripció podreu escollir el vostre torn.`,
         priceTag: "Aportació voluntària",
         limitedSpots: true,
         beneficiaryNotice: "Tots els beneficis aniran destinats a l'ADF Gavarres Marítima",
+        hasTurnField: true,
+        turnLabel: "Torn de Sortida Desitjat (Durada aproximada 2-3h) *",
+        turnOptions: [
+            { value: 'Torn 1 (08:00h - 10:30h)', label: 'Torn 1: 08:00h a 10:30h (Matí 1)' },
+            { value: 'Torn 2 (10:30h - 13:00h)', label: 'Torn 2: 10:30h a 13:00h (Matí 2)' },
+            { value: 'Torn 3 (13:00h - 15:30h)', label: 'Torn 3: 13:00h a 15:30h (Tarda 1)' },
+            { value: 'Torn 4 (15:30h - 18:00h)', label: 'Torn 4: 15:30h a 18:00h (Tarda 2)' }
+        ],
+        defaultTurn: 'Torn 1 (08:00h - 10:30h)',
         hasLevelField: true,
         levelLabel: "Nivell d'Experiència en Vies Ferrades *",
         levelOptions: [
@@ -117,7 +126,7 @@ const getEventConfig = (event) => {
         hasCommentsField: true,
         commentsLabel: "Observacions o Material requerit (opcional)",
         commentsPlaceholder: "Escriu qualsevol informació d'interès per als guies, si portes equip propi...",
-        ticketLevelHeading: "Nivell d'escalada:",
+        ticketLevelHeading: "Torn i Nivell:",
         footerNote: `Les dades s'utilitzaran exclusivament per a l'organització i assegurança de la Via Ferrada Solidària.`
     };
 };
@@ -131,6 +140,7 @@ const EventModal = ({ isOpen, onClose, event }) => {
         email: '',
         phone: '',
         dni: '',
+        turn: config.defaultTurn || '',
         level: config.defaultLevel,
         emergencyContact: '',
         comments: ''
@@ -144,6 +154,7 @@ const EventModal = ({ isOpen, onClose, event }) => {
         if (event) {
             setFormData(prev => ({
                 ...prev,
+                turn: config.defaultTurn || '',
                 level: config.defaultLevel
             }));
         }
@@ -165,6 +176,10 @@ const EventModal = ({ isOpen, onClose, event }) => {
         const now = new Date();
         const formattedDate = `${now.toLocaleDateString('ca-ES')} ${now.toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' })}`;
 
+        const levelValue = config.hasTurnField
+            ? `${formData.turn || config.defaultTurn} | ${formData.level || config.defaultLevel}`
+            : (formData.level || config.defaultLevel);
+
         const registrationRecord = {
             id: ticketId,
             createdAt: formattedDate,
@@ -173,7 +188,8 @@ const EventModal = ({ isOpen, onClose, event }) => {
             email: formData.email.trim(),
             phone: formData.phone.trim(),
             dni: formData.dni.trim() || 'N/D',
-            level: formData.level || config.defaultLevel,
+            turn: formData.turn || config.defaultTurn || '',
+            level: levelValue,
             emergencyContact: formData.emergencyContact.trim() || '-',
             comments: formData.comments.trim() || '-'
         };
@@ -201,6 +217,7 @@ const EventModal = ({ isOpen, onClose, event }) => {
             email: '',
             phone: '',
             dni: '',
+            turn: config.defaultTurn || '',
             level: config.defaultLevel,
             emergencyContact: '',
             comments: ''
@@ -464,6 +481,28 @@ const EventModal = ({ isOpen, onClose, event }) => {
                                                 </div>
                                             </div>
                                         </div>
+
+                                        {/* Dynamic Select Field (Turn) */}
+                                        {config.hasTurnField && (
+                                            <div>
+                                                <label htmlFor="turn" className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                                    {config.turnLabel}
+                                                </label>
+                                                <select
+                                                    id="turn"
+                                                    name="turn"
+                                                    value={formData.turn}
+                                                    onChange={handleChange}
+                                                    className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-alpine-500 focus:ring-2 focus:ring-alpine-200 outline-none text-sm transition-all bg-white font-medium text-stone-900"
+                                                >
+                                                    {config.turnOptions.map(opt => (
+                                                        <option key={opt.value} value={opt.value}>
+                                                            {opt.label}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        )}
 
                                         {/* Dynamic Select Field (Level / Menu) */}
                                         {config.hasLevelField && (

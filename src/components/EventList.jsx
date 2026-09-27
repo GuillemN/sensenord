@@ -97,7 +97,7 @@ const EventList = () => {
                                         {event.title}
                                     </h3>
 
-                                    <p className="text-sm text-stone-600 mb-3 line-clamp-2">
+                                    <p className="text-sm text-stone-600 mb-3 whitespace-pre-line">
                                         {event.description}
                                     </p>
 
