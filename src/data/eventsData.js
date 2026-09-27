@@ -10,7 +10,7 @@ export const VIA_FERRADA_EVENT = {
     location: 'Cala del Molí / Sant Feliu de Guíxols',
     status: 'Obert',
     price: 'Aportació voluntària',
-    description: `Sortides durant tot el dia, de 8:00 a 18:00 h.\n\n⏱️ L’activitat té una durada aproximada de 2-3 hores i s’organitzaran diferents torns de sortida al llarg del dia.\n\nEn el moment de la inscripció podreu escollir el vostre torn.`,
+    description: `Sortides durant tot el dia, de 8:00 a 18:00 h.\n\n⏱️ L’activitat té una durada aproximada de 2-3 hores i s’organitzaran diferents torns de sortida al llarg del dia.`,
     badge: 'Fita Solidària 2026',
     limitedSpots: true,
     beneficiaryNotice: 'Tots els beneficis aniran destinats a l\'ADF Gavarres Marítima',
